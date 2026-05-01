@@ -1,0 +1,23 @@
+{
+  "logo": {
+    "type": "none"
+  },
+  "display": {
+    "separator": "→"
+  },
+  "modules": [
+    "title",
+    "separator",
+    "os",
+    "host",
+    "kernel",
+    "uptime",
+    "packages",
+    "shell",
+    "terminal",
+    "cpu",
+    "gpu",
+    "memory"
+    
+  ]
+}

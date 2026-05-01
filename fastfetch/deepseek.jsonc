@@ -1,0 +1,126 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+    "type": "none"
+},
+    
+    "modules": [
+        {
+            "type": "colors",
+            "symbol": "circle"
+        },
+        {
+            "type": "title",
+            "key": "  User",
+            "format": "{user-name}",
+            "keyColor": "blue"
+        },
+        {
+            "type": "title", 
+            "key": "  Hostname",
+            "format": "{host-name}",
+            "keyColor": "green"
+        },
+        
+        {
+            "type": "host",
+            "key": "󰓷  Model",
+            "keyColor": "red"
+        },
+        {
+            "type": "os",
+            "key": "  OS",
+            "format": "{pretty-name} {version-id} {arch}",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "kernel",
+            "key": "  Kernel",
+            "keyColor": "magenta"
+        },
+        {
+            "type": "uptime", 
+            "key": "  Uptime",
+            "keyColor": "cyan"
+        },
+        {
+            "type": "colors",
+            "symbol": "circle"
+        },
+        
+        {
+            "type": "wm",
+            "key": "󰬞  Window Manager",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "colors",
+            "symbol": "circle"
+        },
+        {
+            "type": "de",
+            "key": "󱈹  Desktop Environment",
+            "keyColor": "blue"
+        },
+        {
+            "type": "shell",
+            "key": "   Shell",
+            "keyColor": "magenta"
+        },
+        {
+            "type": "terminal",
+            "key": "   Terminal",
+            "format": "{pretty-name} {version}",
+            "keyColor": "cyan"
+        },
+        {
+            "type": "packages",
+            "key": "   Packages", 
+            "format": "{all}",
+            "keyColor": "white"
+        },
+        {
+            "type": "󱗘   processes",
+            "key": "Processes",
+            "keyColor": "green"
+        },
+        {
+            "type": "cpu",
+            "key": "  Temperature",
+            "temp": true,
+            "format": "{temperature}",
+            "keyColor": "red"
+        },
+        {
+            "type": "colors",
+            "symbol": "circle"
+        },
+        {
+            "type": "cpu",
+            "key": "󰻠  CPU",
+            "format": "{cores-logical} x {name}",
+            "keyColor": "green"
+        },
+        {
+            "type": "gpu",
+            "key": "󰆤  GPU",
+            "format": "{name}",
+            "keyColor": "blue"
+        },
+        {
+            "type": "memory",
+            "key": "  RAM",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "disk",
+            "key": "  Disk",
+            "folders": "/",
+            "keyColor": "magenta"
+        },
+        {
+            "type": "colors",
+            "symbol": "circle"
+        }
+    ]
+}

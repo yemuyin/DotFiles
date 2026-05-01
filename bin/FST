@@ -1,0 +1,15 @@
+#!/bin/bash
+# Script: fst
+
+AVATARS_DIR="$HOME/.Avatares"
+TEMP_LOGO="/tmp/fastfetch_chafa_logo.txt"
+CONFIG_FILE="$HOME/.config/fastfetch/Rorfetch4.jsonc"
+
+# 1. Elegir avatar
+IMAGEN_ALEATORIA=$(find "$AVATARS_DIR" -type f \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.webp" \) | shuf -n 1)
+
+# 2. Generar el logo ANSI para el JSON (tamaño 32x16 para que quepa al lado)
+chafa --symbols sextant --size 32x16 --colors 256 "$IMAGEN_ALEATORIA" > "$TEMP_LOGO"
+
+# 3. Lanzar Fastfetch (ahora lee el logo desde el JSON automáticamente)
+fastfetch -c "$CONFIG_FILE"

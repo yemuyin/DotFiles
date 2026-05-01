@@ -1,0 +1,39 @@
+{
+    "bar_id": "bar-1",
+    "ipc": true,
+    "layer": "top",
+    "position": "top",
+    "height": 42,
+    "width": 2200,
+    "margin-top": 2,
+    "gtk-layer-shell": true,
+    "reload_style_on_change": true,
+
+    "modules-center": [
+    "custom/cava",
+    "ext/workspaces",
+    "custom/menu",
+    "wlr/taskbar"],
+
+    "modules-right": [
+    "custom/clipboard",
+    "custom/timer",
+    "clock",
+    "clock#date",
+    "custom/tiempo",
+    "custom/volume",
+    "custom/power"],
+
+    "modules-left": [
+    "network",
+    //"cpu",
+    "disk",
+    "temperature",
+    //"memory",
+    "custom/top-cpu",
+    "custom/top-memory"],
+
+    //Config módulos
+    "include": ["~/.config/waybar/modules.jsonc"],
+}
+

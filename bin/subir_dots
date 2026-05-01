@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Configuración
+REPO_DIR="$HOME/DotFiles"
+
+# Entrar al repositorio
+cd "$REPO_DIR" || { echo "No se encontró la carpeta $REPO_DIR"; exit 1; }
+
+# 1. Añadir cambios
+echo "󰚰 Añadiendo cambios..."
+git add .
+
+# 2. Commit (te pedirá un mensaje)
+echo "󰗘 Escribe el mensaje del commit (qué has cambiado?):"
+read -r mensaje
+if [ -z "$mensaje" ]; then
+    mensaje="Actualización rutinaria de configs"
+fi
+git commit -m "$mensaje"
+
+# 3. Subir a GitHub
+echo "󰛶 Subiendo a GitHub..."
+git push origin main
+
+echo "Done! Todo niquelao en la nube. (;-D)"

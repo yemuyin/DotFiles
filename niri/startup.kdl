@@ -1,0 +1,17 @@
+spawn-at-startup "dbus-update-activation-environment --all"
+spawn-at-startup "/usr/libexec/xdg-desktop-portal"
+spawn-at-startup "/usr/libexec/xdg-desktop-portal-wlr"
+spawn-at-startup "pipewire-wrapper.sh"
+spawn-at-startup "Lock.sh"
+spawn-at-startup "swww-daemon"
+spawn-at-startup "~/.local/bin/niri-sidebar" "listen"
+spawn-at-startup "ClipBoard.sh"
+spawn-at-startup "way.sh"
+spawn-at-startup "swaync"
+spawn-at-startup "Swww_Walls.sh"
+spawn-at-startup "mako"
+spawn-at-startup "blueman-applet"
+spawn-at-startup "mula"
+
+prefer-no-csd
+screenshot-path "~/Imágenes/ShotS/Niri from %Y-%m-%d %H-%M-%S.png"

@@ -1,0 +1,192 @@
+binds {
+
+			// SALIR DE NIRI
+			// The quit action will show a confirmation dialog to avoid accidental exits.
+
+	Ctrl+Alt+Delete { quit; }
+
+			// CERRAR LA VENTANA
+
+	Mod+E { close-window; }
+	//Mod+K { spawn "pkill" "cavibe"; }
+
+			// VER LOS ATAJOS
+
+	Mod+V { spawn "~/.config/niri/keys/keys.sh"; }
+	
+			// NIRI-SIDEBAR
+			
+    // Toggle the focused window into/out of the sidebar
+    Mod+S { spawn-sh "~/.local/bin/niri-sidebar toggle-window"; }
+
+    // Toggle sidebar visibility (hide/show)
+    Mod+Shift+S { spawn-sh "~/.local/bin/niri-sidebar toggle-visibility"; }
+
+    // Flip the order of the sidebar
+    Ctrl+S { spawn-sh "~/.local/bin/niri-sidebar flip"; }
+
+			// APLICACIONES
+
+		Mod+Space { spawn "ghostty"; }
+		Ctrl+Space { spawn "foot"; }
+		
+	    Alt+Space  { spawn "fuzzel";}
+            Alt+F12 { spawn "Power-Menu.sh"; }
+            Alt+L  { spawn "Lock.sh";}
+           Ctrl+W  { spawn "firefox"; }
+            Alt+W  { spawn "chromium"; }
+            Alt+A  { spawn "pcmanfm"; }
+            Ctrl+A { spawn "env" "LANG=es_ES.UTF-8" "ghostty" "-e" "rovr"; }
+            Alt+E  { spawn "geany"; }
+            Alt+I  { spawn "WinInfo1.sh"; }
+            //Mod+N { spawn "/home/yemu/.config/niri/scripts/control_center.sh"; }
+          
+	    Alt+Q  { spawn "Swww_Walls.sh";}
+	    Alt+P  { spawn "pick-color";}
+	    Alt+T  { spawn "foot" "-e" "pomo";}
+	    Alt+Y  { spawn "foot" "-e" "ytsurf" "--audio";}
+	    Alt+C  { spawn "cavibe" "--mode" "wallpaper"; }
+
+
+
+			// ESPECIAL GRABACION
+// Lanzamos foot, le ponemos un título y ejecutamos el script
+Mod+G { spawn "foot" "-T" "grabadora" "/home/yemu/.local/bin/grabar-pantalla-completa.sh"; }
+Mod+H { spawn "foot" "-T" "grabadora" "/home/yemu/.local/bin/grabar-pantalla-recorte.sh"; }
+
+// El pkill sigue siendo útil como "botón de pánico", pero ahora 
+// también podrás cerrar la ventana de foot con la tecla que uses para cerrar ventanas.
+Mod+K { spawn "pkill" "-SIGINT" "wf-recorder"; }
+
+			// SHOTS
+
+	Print { screenshot; }
+	Mod+Print { screenshot-screen; }
+	Alt+Print { screenshot-window; }
+	Mod+Alt+S { spawn "Swappy.sh"; }
+
+			// BAJAR Y SUBIR VOLUMEN
+
+	Alt+F2 {spawn "pactl" "set-sink-volume" "@DEFAULT_SINK@" "-5%";}
+	Alt+F3 {spawn "pactl" "set-sink-volume" "@DEFAULT_SINK@" "+5%";}
+	Alt+F4 { spawn "pactl" "set-sink-mute" "@DEFAULT_SINK@" "toggle"; }
+
+			// WAYBAR //
+
+	Mod+O  { spawn "pkill" "waybar" ; }
+	Mod+P  { spawn "way.sh" ; }
+
+			// CENTRAR-MOVER LA COLUMNA
+
+	Ctrl+1 { center-column; }
+	Ctrl+left { move-column-left; }
+	Ctrl+Right { move-column-right; }
+	//Ctrl+Down  { move-window-down; }
+	//Ctrl+Up    { move-window-up; }
+	// En tu binds.kdl
+"Mod+T" { 
+    spawn "niri" "msg" "action" "move-floating-window" "-x" "1950" "-y" "10" 
+}
+
+"Mod+R" { 
+    spawn "niri" "msg" "action" "move-floating-window" "-x" "10" "-y" "10" 
+}
+
+			// EXPOSÉ
+
+	Mod+Tab { toggle-overview; }
+
+			// PESTAÑAS
+
+	Mod+W { toggle-column-tabbed-display; }
+	//Shift+Tab { ; }
+
+			// MODO FLOTANTE //
+
+	Alt+F { toggle-window-floating; }
+	Shift+Space { switch-focus-between-floating-and-tiling; }
+
+			// MODO TILING //
+
+	Mod+Left  { focus-column-left; }
+	Mod+Down  { focus-window-down; }
+	Mod+Up    { focus-window-up; }
+	Mod+Right { focus-column-right; }
+
+	Mod+Home { focus-column-first; }
+	Mod+End  { focus-column-last; }
+	Ctrl+Alt+Left { move-column-to-first; }
+	Ctrl+Alt+Right { move-column-to-last; }
+
+			// ENFOCAR Y MOVER
+
+	Mod+Page_Down      { focus-workspace-down; }
+	Mod+Page_Up        { focus-workspace-up; }
+
+	Mod+Ctrl+Down { move-column-to-workspace-down; }
+	Mod+Ctrl+Up   { move-column-to-workspace-up; }
+
+			// CONTROL VENTANAS
+
+		Mod+F { maximize-column; }
+		Mod+Shift+F { fullscreen-window; }
+		
+			//  ANCHURA
+		Mod+KP_Subtract { set-column-width "-1%"; }
+		Mod+KP_Add { set-column-width "+1%"; }
+		
+			//  ALTURA
+		Alt+KP_Subtract { set-window-height "-1%"; }
+		Alt+KP_Add { set-window-height "+1%"; }
+		
+			// TAMAÑOS FIJOS ANCHURA
+		Mod+KP_Home { set-column-width "33%" ; }
+		Mod+KP_Up { set-column-width "50%"; }
+		Mod+KP_Prior { set-column-width "66%"; }
+		
+			// TAMAÑOS FIJOS ALTURA
+		Mod+KP_Left { set-window-height "33%"; }
+		Mod+KP_Begin { set-window-height "50%"; }
+		Mod+KP_Right { set-window-height "66%"; }
+		Mod+KP_End { set-window-height "100%"; }
+
+			// MOVER VENTANA FLOTANTE
+
+	"Ctrl+Shift+Left" { spawn "niri" "msg" "action" "move-floating-window" "-x" "-10"; }
+	"Ctrl+Shift+Right" { spawn "niri" "msg" "action" "move-floating-window" "-x" "+10"; }
+	"Ctrl+Shift+Up" { spawn "niri" "msg" "action" "move-floating-window" "-y" "-10"; }
+	"Ctrl+Shift+Down" { spawn "niri" "msg" "action" "move-floating-window" "-y" "+10"; }
+
+			// MOVER VENTANA A LA COLUMNA AL LADO
+
+			Ctrl+Return { consume-or-expel-window-left ; } //Columna izquierda
+			Mod+Return { consume-or-expel-window-right; } //Columna derecha
+
+			// MOVER VENTANA TILING ENTRE ESCRITORIOS
+
+			Mod+Ctrl+1 { move-column-to-workspace 1; }
+			Mod+Ctrl+2 { move-column-to-workspace 2; }
+			Mod+Ctrl+3 { move-column-to-workspace 3; }
+			Mod+Ctrl+4 { move-column-to-workspace 4; }
+			Mod+Ctrl+5 { move-column-to-workspace 5; }
+			Mod+Ctrl+6 { move-column-to-workspace 6; }
+			Mod+Ctrl+7 { move-column-to-workspace 7; }
+			Mod+Ctrl+8 { move-column-to-workspace 8; }
+			Mod+Ctrl+9 { move-column-to-workspace 9; }
+			// Eccetera...
+
+			// MOVERSE ENTRE ESCRITORIOS
+
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    // Eccetera...
+
+}		///// FIN DE LOS ATAJOS
+	    ////////////////////////////////

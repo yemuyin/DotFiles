@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Evitar errores con nombres que tienen espacios
+IFS=$'\n'
+
+# Buscamos archivos PNG, WEBP, BMP (puedes añadir más)
+# No tocamos los .jpg para no duplicar trabajo
+for img in $(find . -maxdepth 1 -type f \( -iname "*.png" -o -iname "*.webp" -o -iname "*.bmp" \)); do
+
+    # Extraer el nombre sin la extensión
+    nombre="${img%.*}"
+
+    echo "Procesando: $img"
+
+    # Convertimos a JPG con calidad 2 y redimensionado inteligente
+    if ffmpeg -i "$img" -vf "scale='min(3840,iw)':-1" -q:v 2 "${nombre}.jpg" -y -hide_banner -loglevel error; then
+        echo " OK: ${nombre}.jpg creado."
+        # SI LA CONVERSIÓN FUE BIEN, BORRAMOS LA ORIGINAL
+        rm "$img"
+        echo "️  Original ($img) eliminada."
+    else
+        echo " ERROR: No se pudo convertir $img"
+    fi
+
+done
+
+echo "--- Proceso completado ---"

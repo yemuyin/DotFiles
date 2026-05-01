@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Capturamos el color (sin el -a para hacerlo nosotros manualmente)
+COLOR=$(hyprpicker)
+
+# Solo si se capturó algo (no si se pulsó ESC)
+if [ -n "$COLOR" ]; then
+    # Copiamos al portapapeles de forma explícita y limpia
+    # Esto es lo que soluciona el problema de "ayer"
+    printf "%s" "$COLOR" | wl-copy
+    
+    # Enviamos la notificación persistente a Mako
+    notify-send "Color capturado" "Código: $COLOR\nGuardado en el historial." \
+        -a "Hyprpicker" \
+        -t 0
+fi

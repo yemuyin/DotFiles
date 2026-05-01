@@ -1,0 +1,1 @@
+ffmpeg -f pulse -i alsa_output.usb-CSCTEK_USB_Audio_and_HID_A34004801402-00.analog-stereo.monitor -c:a aac prueba_audio.aac

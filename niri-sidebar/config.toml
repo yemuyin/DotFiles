@@ -1,0 +1,34 @@
+# niri-sidebar configuration
+
+[geometry]
+# Width of the sidebar in pixels
+width = 400
+# Height of the sidebar windows
+height = 335
+# Gap between windows in the stack
+gap = 10
+
+[margins]
+# Margins are default to 0 if left out
+# Space from the top of the screen
+top = 50
+# Space from the right edge of the screen
+right = 212
+# Space from the left edge of the screen
+left = 10
+# Space from the bottom of the screen
+bottom = 60
+
+[interaction]
+# Where to put the sidebar, can be "left", "right", "top" or "bottom"
+# Defaults to "right"
+position = "right"
+# Width of windows when sidebar is hidden in pixels
+peek = 10
+# Width of window when sidebar is hidden but window is focused in pixels
+# set this equal to peek to disable this feature
+# set this equal to sidebar_width + offset_right to make focused windows "unhide"
+# Optional and defaults to peek if ommitted
+focus_peek = 50
+# Whether the sidebar should follow if you switch workspaces
+sticky = false

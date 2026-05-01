@@ -1,0 +1,19 @@
+ "pulseaudio": {
+    "format": "{icon}  {volume}%",
+    "format-muted": "VOL 󰝟 {volume}%",
+    "format-icons": {
+      "headphone": "󰋋",
+      "default": [
+        "󰕿",
+        "󰖀",
+        "󰕾"
+      ]
+    },
+    "tooltip": true,
+    "tooltip-format": "VOL {}",
+    "on-click": "pavucontrol",
+    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +1%",
+    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -1%",
+    "min-length": 6,
+    "max-length": 6
+  },

@@ -1,0 +1,48 @@
+#!/bin/bash
+
+for f in "$@"; do
+    [ ! -f "$f" ] && continue
+
+    FINAL_DIR="${f%.*}"
+    TMP_DIR="tmp_aplanar_$(date +%s)"
+    mkdir -p "$TMP_DIR"
+    mkdir -p "$FINAL_DIR"
+
+    echo " Extrayendo todo de: $f..."
+
+    # 1. Extraer el pack principal
+    unrar x -o+ "$f" "$TMP_DIR/"
+
+    # 2. Extraer matrioshkas
+    find "$TMP_DIR" -type f \( -name "*.cbr" -o -name "*.rar" -o -name "*.cbz" -o -name "*.zip" \) | while read -r sub; do
+        echo "  󱧶 Extrayendo contenido de: $(basename "$sub")"
+        if [[ "$sub" == *.rar ]] || [[ "$sub" == *.cbr ]]; then
+            unrar x -o+ "$sub" "$TMP_DIR/" > /dev/null
+        else
+            unzip -o "$sub" -d "$TMP_DIR/" > /dev/null
+        fi
+        rm "$sub"
+    done
+
+    # 3. Aplanar imágenes
+    echo "󰄬 Aplanando todas las imágenes..."
+    find "$TMP_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) -exec mv {} "$FINAL_DIR/" \;
+
+    # 4. Limpieza del temporal
+    rm -rf "$TMP_DIR"
+
+    # --- AQUÍ ESTÁ EL CAMBIO ---
+    echo "󰗄 Creando archivo CBZ para Atril..."
+    # Entramos, comprimimos el contenido y volvemos
+    (cd "$FINAL_DIR" && zip -0 -r "../${FINAL_DIR}.cbz" *)
+    
+    # OPCIONAL: Borrar la carpeta de imágenes si el zip se creó bien
+    if [ $? -eq 0 ]; then
+        rm -rf "$FINAL_DIR"
+        echo " ¡Hecho! Cómic listo en: ${FINAL_DIR}.cbz"
+    else
+        echo " Error al crear el CBZ, la carpeta se mantiene."
+    fi
+    # ---------------------------
+
+done

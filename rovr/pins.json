@@ -1,0 +1,20 @@
+{
+  "default": [
+    { "name": "󱂵 Inicio", "path": "/home/yemu" },
+    { "name": "󰉍 Descargas", "path": "/home/yemu/Descargas" },
+    { "name": "󰈙 Documentos", "path": "/home/yemu/Documentos" },
+    { "name": "󰉏 Imágenes", "path": "/home/yemu/Imágenes" },
+    { "name": "󰈫 Vídeos", "path": "/home/yemu/Vídeos" },
+    { "name": "󰝚 Música", "path": "/home/yemu/Música" },
+    { "name": "󰇄 Escritorio", "path": "/home/yemu/Escritorio" },
+    { "name": "󰮄 Comixs", "path": "/home/yemu/Comixs" },
+    { "name": "󰙅 Personal", "path": "/home/yemu/Personal" },
+    { "name": "Gifs", "path": "/home/yemu/Gifs" }
+  ],
+  "pins": [
+    { "name": "== DISCOS ==", "path": "/run/media/yemu" },
+    { "name": "󰋊 SSD (343G)", "path": "/run/media/yemu/SSD" },
+    { "name": "󰋊 4 TERAS", "path": "/run/media/yemu/4TERAS" },
+    { "name": "󰋊 1 TERA", "path": "/run/media/yemu/1TERA" }
+    ]
+}

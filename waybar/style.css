@@ -1,0 +1,144 @@
+* {
+    font-weight: bold;
+    border-radius: 35px;
+    font-family: "CaskaydiaCove-Nerd-Font-SemiBold-Italic";
+    font-size: 12px;
+    min-height: 8px;
+    background: transparent;
+    border: none; /* Sin bordes universales */
+}
+
+/* LA BARRA PRINCIPAL */
+#waybar {
+    border-radius: 20px;
+    background: transparent;
+}
+
+window#waybar {
+    color: #b87333;
+    background: transparent;
+    opacity: 1;
+}
+
+.modules-left, .modules-center, .modules-right {
+    color: #b87333;
+    background: transparent;
+}
+
+/* ESTILO BASE PARA TODOS LOS MÓDULOS (Sin bordes cobre) */
+#custom-top-cpu,
+#custom-top-memory,
+#temperature,
+#disk,
+#clock,
+#pulseaudio,
+#wireplumber,
+#custom-volume,
+#custom-menu,
+#custom-tiempo,
+#custom-power,
+#custom-cal,
+#network,
+#ext-workspaces,
+#custom-playerinfo,
+#custom-clipboard,
+#custom-timer,
+#custom-cava,
+#custom-taskbar,
+#taskbar,
+#wlr-taskbar {
+    margin-top: 8px;
+    margin-bottom: 0px;
+    margin-left: 4px;
+    margin-right: 4px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 20px;
+    background: rgba(35, 50, 61, 0.75);
+    color: #b87333;
+    transition: 0.3s;
+    min-height: 28px;
+}
+
+/* BOTÓN DE APAGADO (Rojo claro permanente) */
+#custom-power {
+    background: rgba(255, 85, 85, 0.6); /* Rojo claro sutil */
+    color: #ffffff; /* Icono en blanco para que resalte */
+}
+
+/* HOVER PARA TODOS LOS MÓDULOS */
+#cpu:hover,
+#memory:hover,
+#temperature:hover,
+#disk:hover,
+#clock:hover,
+#pulseaudio:hover,
+#wireplumber:hover,
+#custom-volume:hover,
+#custom-menu:hover,
+#custom-tiempo:hover,
+#custom-timer,
+#custom-cal:hover,
+#network:hover,
+#custom-playerinfo:hover,
+#custom-clipboard:hover,
+#custom-cava:hover,
+#custom-taskbar:hover,
+#taskbar:hover,
+#wlr-taskbar:hover,
+#custom-power:hover {
+    color: #232136;
+    background: #b87333;
+}
+
+/* WORKSPACES */
+#workspaces {
+    background: rgba(35, 50, 61, 0.75);
+    margin-top: 8px;
+    margin-left: 8px;
+    margin-right: 4px;
+    padding-right: 4px;
+    color: #b87333;
+    transition: 0.3s;
+}
+
+#workspaces button {
+    color: #b87333;
+    transition: 0.3s;
+    background: transparent;
+    margin: 2px;
+    padding: 0 8px;
+}
+
+#workspaces button:hover {
+    background: #b87333;
+    color: #232136;
+}
+
+#workspaces button.focused,
+#workspaces button.active {
+    background-color: rgba(40, 40, 40, 0.5);
+    color: #b87333;
+}
+
+/* ICONOS TASKBAR (PINGÜINOS) */
+#custom-taskbar span, 
+#wlr-taskbar button {
+    font-family: "CaskaydiaCove-Nerd-Font-SemiBold-Italic";
+    font-size: 18px;
+    color: #b87333;
+    background: transparent;
+    margin: 0 4px;
+}
+
+/* TOOLTIPS */
+tooltip {
+    background: #171717;
+    color: #b87333;
+    border-radius: 7px;
+}
+
+/* OTROS AJUSTES */
+#custom-cava { min-width: 250px; }
+#network { min-width: 100px; }
+#custom-playerinfo { min-width: 50px; }

@@ -1,0 +1,39 @@
+layout {
+    gaps 12
+    background-color "#00000040"
+    default-column-width { proportion 0.33; }
+
+    tab-indicator {
+        width 28
+        gap 8
+        length total-proportion=0.5
+        position "top"
+        place-within-column
+    }
+
+    // Cambiamos la estrategia: En lugar de apagarlo, lo hacemos 
+    // IDENTICO al borde pistacho. Asi, aunque Niri priorice el ring, 
+    // veras el color que quieres.
+    focus-ring {
+        width 2
+        active-color "#b87333"
+        inactive-color "#505050"
+    }
+
+    // Mantenemos el border igual por si acaso
+    border {
+        width 2
+        active-color "#b87333"
+        inactive-color "#505050"
+    }
+
+    struts {
+        bottom 4
+    }
+}
+
+// Esquinas redondeadas globales
+window-rule {
+    geometry-corner-radius 12
+    clip-to-geometry true
+}

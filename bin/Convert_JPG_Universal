@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Evitar líos con espacios en los nombres
+IFS=$'\n'
+
+# Buscamos TODOS los archivos en el directorio actual
+# Excluimos los .jpg y .jpeg (mayúsculas y minúsculas) para no entrar en bucle
+find . -maxdepth 1 -type f ! -iname "*.jpg" ! -iname "*.jpeg" | while read -r img; do
+
+    # Nombre sin extensión
+    nombre="${img%.*}"
+    
+    echo "Procesando: $img"
+
+    # FFmpeg es muy listo: si no conoce el formato, dará error solo.
+    # Usamos la misma configuración de calidad y redimensionado
+    if ffmpeg -i "$img" -vf "scale='min(3840,iw)':-1" -q:v 2 "${nombre}.jpg" -y -hide_banner -loglevel error; then
+        echo "✅ OK: ${nombre}.jpg creado."
+        rm "$img"
+        echo "🗑️  Original ($img) eliminada."
+    else
+        echo "⚠️  Saltado/Error: $img (Posiblemente no sea una imagen o formato incompatible)"
+    fi
+
+done
+
+echo "--- ¡Misión cumplida! Todo convertido a JPG ---"

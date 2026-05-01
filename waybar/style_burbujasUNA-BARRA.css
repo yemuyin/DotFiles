@@ -1,0 +1,118 @@
+* {
+    font-weight: bold;
+    font-family: "CaskaydiaCove-Nerd-Font-SemiBold-Italic";
+    font-size: 12px;
+    border: none; /* <--- Cirugía: Adiós bordes universales */
+    margin: 0;
+    padding: 0;
+    background: transparent;
+}
+
+/* LA BARRA PRINCIPAL (Mantenemos la cápsula) */
+window#waybar {
+    background: rgba(35, 50, 61, 0.75);
+    border: 2px solid #b87333; /* El único borde superviviente */
+    border-radius: 20px;
+    margin: 5px 15px;
+}
+
+/* ESTILO BASE PARA TODOS LOS MÓDULOS (Sin bordes internos) */
+#cpu,
+#memory,
+#temperature,
+#disk,
+#clock,
+#pulseaudio,
+#wireplumber,
+#custom-volume,
+#custom-menu,
+#custom-tiempo,
+#custom-power,
+#custom-cal,
+#network,
+#ext-workspaces,
+#custom-playerinfo,
+#custom-clipboard,
+#custom-timer,
+#custom-cava,
+#custom-taskbar,
+#taskbar,
+#wlr-taskbar {
+    margin: 6px 4px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.2); /* Mantenemos el fondo sutil */
+    color: #b87333;
+    transition: 0.3s;
+    min-height: 28px;
+    border: none; /* <--- Cirugía: Módulos sin borde */
+}
+
+/* HOVER PARA TODOS LOS MÓDULOS (COBRE TOTAL) */
+#cpu:hover,
+#memory:hover,
+#temperature:hover,
+#disk:hover,
+#clock:hover,
+#pulseaudio:hover,
+#wireplumber:hover,
+#custom-volume:hover,
+#custom-menu:hover,
+#custom-tiempo:hover,
+#custom-timer:hover,
+#custom-cal:hover,
+#network:hover,
+#custom-playerinfo:hover,
+#custom-clipboard:hover,
+#custom-cava:hover,
+#custom-taskbar:hover,
+#taskbar:hover,
+#wlr-taskbar:hover,
+#wlr-taskbar button:hover {
+    color: #232136;
+    background: #b87333;
+}
+
+/* AJUSTES ESPECÍFICOS PARA LOS ICONOS DE LA TASKBAR (PINGÜINOS) */
+#wlr-taskbar button {
+    margin: 0 10px; /* Separación quirúrgica */
+    padding: 0 4px;
+    font-size: 18px;
+}
+
+/* WORKSPACES (Sin bordes) */
+#workspaces {
+    background: rgba(0, 0, 0, 0.2);
+    margin: 6px 4px;
+    border-radius: 20px;
+}
+
+#workspaces button {
+    color: #b87333;
+    background: transparent;
+    margin: 2px;
+    padding: 0 8px;
+    border: none; /* <--- Cirugía: Botones sin borde */
+}
+
+#workspaces button:hover {
+    background: #b87333;
+    color: #232136;
+    border-radius: 15px;
+}
+
+#workspaces button.focused,
+#workspaces button.active {
+    background-color: rgba(184, 115, 51, 0.4);
+    color: #ffffff;
+    border-radius: 15px;
+}
+
+/* OTROS AJUSTES */
+#custom-cava { min-width: 250px; }
+tooltip {
+    background: #171717;
+    color: #b87333;
+    border: 1px solid #b87333;
+}

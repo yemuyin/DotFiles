@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Comprobar si hay argumentos
+if [ $# -eq 0 ]; then
+    echo "Uso: comic-fix archivo1.cbr archivo2.rar ..."
+    exit 1
+fi
+
+for f in "$@"; do
+    # Comprobar si el archivo existe
+    if [ ! -f "$f" ]; then
+        echo "✘ El archivo '$f' no existe. Saltando..."
+        continue
+    fi
+
+    echo " Procesando: $f..."
+
+    # Crear carpeta temporal segura
+    TMP_DIR=$(mktemp -d)
+
+    # Extraer (sea .cbr o .rar)
+    unrar x -o+ "$f" "$TMP_DIR/" > /dev/null
+
+    # Nombre del nuevo archivo (quitamos extensión original y ponemos .cbz)
+    OUT_NAME="${f%.*}.cbz"
+
+    # Crear el ZIP limpio (-j ignora carpetas, -r es recursivo)
+    # Buscamos todos los archivos dentro para que no cree una carpeta raíz
+    (cd "$TMP_DIR" && zip -jr "$OLDPWD/$OUT_NAME" . > /dev/null)
+
+    # Limpieza
+    rm -rf "$TMP_DIR"
+
+    echo " ¡Listo! Creado: $OUT_NAME"
+done
+
+echo "--- Proceso finalizado ---"

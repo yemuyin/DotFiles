@@ -1,0 +1,23 @@
+# niri-sidebar configuration
+
+# Width of the sidebar in pixels
+sidebar_width = 846
+
+# Height of the sidebar windows
+sidebar_height = 336
+
+# Space from the top/bottom of the screen
+offset_top =60
+offset_bottom = 60
+
+# Space from the right edge of the screen
+offset_right = 0
+
+
+# Gap between windows in the stack
+gap = 8
+
+# Width of windows when sidebar is hidden in pixels
+peek = 0
+
+

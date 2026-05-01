@@ -1,0 +1,13 @@
+// CONFIGURACION NIRI - ARCHIVO MAESTRO
+
+include "env.kdl"
+include "input_output.kdl"
+include "startup.kdl"
+include "binds.kdl"
+include "layout.kdl"
+include "animations.kdl"
+include "rules.kdl"
+include "layer-rule.kdl"
+
+// Nota: Asegúrate de que todos los archivos .kdl estén 
+// en la misma carpeta (~/.config/niri/)

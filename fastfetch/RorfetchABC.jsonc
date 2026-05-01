@@ -1,0 +1,217 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+
+  "logo": "none",
+
+  
+   "display": {
+    "separator": " ", 
+    "key": {
+        "type": "string" 
+    },
+    "color": {
+        "keys": "252",
+        "title": "195",
+        "separator": "59",
+        "output": "252"
+    }
+},
+
+  "modules": [
+  {
+            "type": "colors",
+            "paddingLeft": 5,
+            "symbol": "circle"
+        },
+    {
+      "type": "custom",
+      "format": " {#@88}      {#@118}  SISTEMA {#@88}"
+    },
+    {
+            "type": "colors",
+            "paddingLeft": 5,
+            "symbol": "circle"
+        },
+    {
+      "type": "title",
+      "key": " {#@88} {#@118} {#@141}Usuario   ",
+      "format": "{user-name-colored}{at-symbol-colored}{host-name-colored}"
+    },
+    {
+      "type": "os",
+      "key": " {#@88} {#@118} {#@141}OS        ",
+      "format": "Void Linux"
+    },
+    {
+      "type": "kernel",
+      "key": " {#@88} {#@118} {#@141}Kernel    ",
+      "format": "{release}"
+    },
+    {
+      "type": "uptime",
+      "key": " {#@88} {#@118}󰅐 {#@141}Uptime    ",
+      "format": "{2}h {3}m"
+    },
+    { 
+            "type": "command", 
+            "key": "  󰅐 OS-Age    ", 
+            //"keyColor": "White", 
+            "text": "echo $(($(($(date +%s) - $(stat -c %W /))) / 86400)) días",
+            "format": "{1}" 
+        },
+    {
+            "type": "colors",
+            "paddingLeft": 5,
+            "symbol": "circle"
+        },
+        
+    {
+      "type": "custom",
+      "format": " {#@88}      {#@81}󱂬  DESKTOP {#@88}"
+    },
+    {
+            "type": "colors",
+            "paddingLeft": 5,
+            "symbol": "circle"
+        },
+    {
+      "type": "wm",
+      "key": " {#@88} {#@81}󱂬 {#@208}WM        ",
+      "format": "{pretty-name}"
+    },
+    {
+      "type": "shell",
+      "key": " {#@88} {#@81}󰞷 {#@208}Shell     ",
+      "format": "{pretty-name}"
+    },
+    {
+      "type": "terminal",
+      "key": " {#@88} {#@81} {#@208}Terminal  ",
+      "format": "{pretty-name}"
+    },
+    {
+      "type": "theme",
+      "key": " {#@88} {#@81}󰉼 {#@208}Tema      "
+    },
+    {
+      "type": "icons",
+      "key": " {#@88} {#@81}󰀚 {#@208}Iconos    "
+    },
+    {
+      "type": "cursor",
+      "key": " {#@88} {#@81}󰇀 {#@208}Cursor    ",
+      "format": "{1}"
+    },
+    {
+            "type": "colors",
+            "paddingLeft": 5,
+            "symbol": "circle"
+        },
+        
+    {
+      "type": "custom",
+      "format": " {#@88}      {#@178}󰍹  RECURSOS {#@88}"
+    },
+    {
+            "type": "colors",
+            "paddingLeft": 5,
+            "symbol": "circle"
+        },
+    {
+      "type": "display",
+      "key": " {#@88} {#@178}󰍹 {#@69}Display   ",
+      "format": "{width}x{height} @ {refresh-rate}Hz"
+    },
+    {
+      "type": "cpu",
+      "key": " {#@88} {#@178} {#@69}CPU       ",
+      "format": "{name}"
+    },
+    {
+      "type": "command",
+      "key": " {#@88}   {#@59}└─{#@111} Uso     ",
+      "text": "read _ u n s i io irq sirq st g gn < /proc/stat; t1=$((u+n+s+i+io+irq+sirq+st)); id1=$((i+io)); sleep 0.05; read _ u n s i io irq sirq st g gn < /proc/stat; t2=$((u+n+s+i+io+irq+sirq+st)); id2=$((i+io)); dt=$((t2-t1)); did=$((id2-id1)); p=$((100*(dt-did)/dt)); awk -v p=\"$p\" 'BEGIN {w=16; f=int(p*w/100); bar=\"\"; for (i=1; i<=w; i++) bar=bar ((i<=f) ? \"█\" : \"░\"); lbl=sprintf(\"%03d%%\", p); lblc=sprintf(\"\\033[48;5;59m%s\\033[49m\", lbl); s=int((w-length(lbl))/2)+1; print substr(bar,1,s-1) lblc substr(bar,s+length(lbl));}'",
+      "format": "           {#@214}󰣙  {result}"
+    },
+    {
+      "type": "gpu",
+      "key": " {#@88} {#@178}󰢮 {#@69}GPU       ",
+      "format": "{name}"
+    },
+    {
+      "type": "command",
+      "key": " {#@88}   {#@59}└─{#@111} Uso      ",
+      "text": "if [ -r /sys/class/drm/card0/device/gpu_busy_percent ]; then u=$(cat /sys/class/drm/card0/device/gpu_busy_percent); else u=0; fi; awk -v p=\"$u\" 'BEGIN {w=16; f=int(p*w/100); bar=\"\"; for (i=1; i<=w; i++) bar=bar ((i<=f) ? \"█\" : \"░\"); lbl=sprintf(\"%03d%%\", p); lblc=sprintf(\"\\033[48;5;59m%s\\033[49m\", lbl); s=int((w-length(lbl))/2)+1; print substr(bar,1,s-1) lblc substr(bar,s+length(lbl));}'",
+      "format": "          {#@45}󱚢  {result}"
+    },
+    {
+      "type": "command",
+      "key": " {#@88} {#@178}󰍛 {#@69}RAM       ",
+      "text": "awk '/MemTotal:/ {t=$2} /MemAvailable:/ {a=$2} END {printf \"%.1fGiB / %.1fGiB\", (t-a)/1048576, t/1048576}' /proc/meminfo",
+      "format": "{result}"
+    },
+    {
+      "type": "command",
+      "key": " {#@88}   {#@59}└─{#@111} Uso      ",
+      "text": "awk '/MemTotal:/ {t=$2} /MemAvailable:/ {a=$2} END {u=t-a; p=int((u*100)/t); w=16; f=int(p*w/100); bar=\"\"; for (i=1; i<=w; i++) bar=bar ((i<=f) ? \"█\" : \"░\"); lbl=sprintf(\"%03d%%\", p); lblc=sprintf(\"\\033[48;5;59m%s\\033[49m\", lbl); s=int((w-length(lbl))/2)+1; print substr(bar,1,s-1) lblc substr(bar,s+length(lbl))}' /proc/meminfo",
+      "format": "          {#@199}󱃄  {result}"
+    },
+    {
+      "type": "command",
+      "key": " {#@88} {#@178}󰋊 {#@69}(/)       ",
+      "text": "df -h / | awk 'NR==2 {print $3 \" / \" $2}'",
+      "format": "{result}"
+    },
+    {
+      "type": "command",
+      "key": " {#@88}   {#@59}└─{#@111} Uso      ",
+      "text": "df / | awk 'NR==2 {p=$5; sub(/%/,\"\",p); w=16; f=int(p*w/100); bar=\"\"; for (i=1; i<=w; i++) bar=bar ((i<=f) ? \"█\" : \"░\"); lbl=sprintf(\"%03d%%\", p); lblc=sprintf(\"\\033[48;5;59m%s\\033[49m\", lbl); s=int((w-length(lbl))/2)+1; print substr(bar,1,s-1) lblc substr(bar,s+length(lbl))}'",
+      "format": "          {#@226}󰋊  {result}"
+    },
+    {
+      "type": "command",
+      "key": " {#@88} {#@178}󰋊 {#@69}(/home)   ",
+      "text": "df -h /home | awk 'NR==2 {print $3 \" / \" $2}'",
+      "format": "{result}"
+    },
+    {
+      "type": "command",
+      "key": " {#@88}   {#@59}└─{#@111} Uso      ",
+      "text": "df /home | awk 'NR==2 {p=$5; sub(/%/,\"\",p); w=16; f=int(p*w/100); bar=\"\"; for (i=1; i<=w; i++) bar=bar ((i<=f) ? \"█\" : \"░\"); lbl=sprintf(\"%03d%%\", p); lblc=sprintf(\"\\033[48;5;59m%s\\033[49m\", lbl); s=int((w-length(lbl))/2)+1; print substr(bar,1,s-1) lblc substr(bar,s+length(lbl))}'",
+      "format": "          {#@118}󰋊  {result}"
+    },
+    {
+            "type": "colors",
+            "paddingLeft": 5,
+            "symbol": "circle"
+        },
+        
+    {
+      "type": "custom",
+      "format": " {#@88}      {#@141}󰏗  SOFTWARE {#@88}"
+    },
+    {
+            "type": "colors",
+            "paddingLeft": 5,
+            "symbol": "circle"
+        },
+    {
+      "type": "command",
+      "key": " {#@88} {#@141}󰏗 {#@148}Paquetes  ",
+      "text": "echo \"$(xbps-query -l | wc -l) (xbps), $(flatpak list | wc -l) (flatpak)\"",
+      "format": "{result}"
+    },
+    {
+            "type": "colors",
+            "paddingLeft": 5,
+            "symbol": "circle"
+        },
+         "break",
+         { "type": "custom", "format": "\u001b[1;31m 󰊠 \u001b[1;35m󰊠 \u001b[1;36m󰊠 \u001b[1;33m󰮯 \u001b[0;33m· · · · \u001b[1;38;5;208mTERMINAL \u001b[1;32mONLINE" },
+   
+    {
+      "type": "custom",
+      "format": " {#@88}"
+    }
+  ]
+}

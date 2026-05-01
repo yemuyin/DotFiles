@@ -1,0 +1,3 @@
+#:schema  https://raw.githubusercontent.com/NSPC911/rovr/refs/heads/master/src/rovr/config/schema.json
+[theme]
+default = "nord"

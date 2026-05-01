@@ -1,0 +1,470 @@
+/// CONFIGURACION NIRI
+
+//Environment
+//Input
+//Outputs
+//Key Bindings
+//Layout
+//Miscellaneous
+//Window Rules
+//Layer Rules
+//Animations
+
+environment {
+    XDG_CURRENT_DESKTOP "niri"
+    XDG_SESSION_DESKTOP "niri"
+    XDG_SESSION_TYPE "wayland"
+    
+    // Tus variables de temas
+    GDK_BACKEND "wayland"
+    CURSOR_THEME "Bibata-Rainbow-Modern"
+    GTK_THEME "Magnetic-Dark-Gruvbox"
+    ICON_THEME "besgnulinux-drawing"
+    
+    // Gráficos y aplicaciones
+    QT_QPA_PLATFORM "wayland;xcb" // Intenta Wayland, si falla usa X11
+    QT_QPA_PLATFORMTHEME "gtk3"
+    SDL_VIDEODRIVER "wayland"
+    MOZ_ENABLE_WAYLAND "1"
+    
+    // Para Chrome/Electron
+    OZONE_PLATFORM "wayland"
+    ELECTRON_OZONE_PLATFORM_HINT "wayland"
+    
+    _JAVA_AWT_WM_NONREPARENTING "1"
+}
+
+input {
+    keyboard {
+        xkb {
+            layout "es"
+            }
+            numlock
+	}
+
+	focus-follows-mouse max-scroll-amount="20%"
+	warp-mouse-to-focus
+}
+
+output "eDP-1" {
+
+       mode "2560x1440@120.000"
+
+		// You can use integer or fractional scale, for example use 1.5 for 150% scale.
+	scale 1
+	transform "normal"
+	position x=1280 y=0
+}
+			// PROGRAMAS EN INICIO
+
+spawn-at-startup "dbus-update-activation-environment --all"
+
+spawn-at-startup "/usr/libexec/xdg-desktop-portal"
+spawn-at-startup "/usr/libexec/xdg-desktop-portal-wlr"
+
+spawn-at-startup "pipewire-wrapper.sh"
+spawn-at-startup "Lock.sh"
+spawn-at-startup "swww-daemon"
+spawn-at-startup "~/.local/bin/niri-sidebar" "listen"
+spawn-at-startup "ClipBoard.sh"
+spawn-at-startup "way.sh"
+spawn-at-startup "Swww_Walls.sh"
+spawn-at-startup "mako"
+
+
+prefer-no-csd
+screenshot-path "~/Imágenes/ShotS/Niri from %Y-%m-%d %H-%M-%S.png"
+
+
+		// Make the wallpaper stationary, rather than moving with workspaces.
+		// Find the right namespace by running niri msg layers.
+		//match namespace="^wallpaper$"
+
+
+	layer-rule { place-within-backdrop true; }
+
+			// ATAJOS DE TECLAS - COMIENZO //
+
+	binds {
+
+			// SALIR DE NIRI
+			// The quit action will show a confirmation dialog to avoid accidental exits.
+
+	Ctrl+Alt+Delete { quit; }
+
+			// CERRAR LA VENTANA
+
+	Mod+E { close-window; }
+	Mod+K { spawn "pkill" "cavibe"; }
+
+			// VER LOS ATAJOS
+
+	//Mod+S { spawn "~/.config/niri/Keys6.sh"; }
+	
+			// SIDE-BAR
+						
+    // Toggle the focused window into/out of the sidebar
+    Mod+S { spawn-sh "~/.local/bin/niri-sidebar toggle-window"; }
+
+    // Toggle sidebar visibility (hide/show)
+    Mod+Shift+S { spawn-sh "~/.local/bin/niri-sidebar toggle-visibility"; }
+
+    // Flip the order of the sidebar
+    Ctrl+S { spawn-sh "~/.local/bin/niri-sidebar flip"; }
+
+    // Force reorder (useful if something gets misaligned manually)
+    //Mod+Alt+R { spawn-sh "~/.local/bin/niri-sidebar reorder"; }
+
+
+			// ESPECIAL GRABACION
+// Lanzamos foot, le ponemos un título y ejecutamos el script
+Mod+G { spawn "foot" "-T" "grabadora" "/home/yemu/.local/bin/grabar-pantalla-completa.sh"; }
+Mod+H { spawn "foot" "-T" "grabadora" "/home/yemu/.local/bin/grabar-pantalla-recorte.sh"; }
+
+// El pkill sigue siendo útil como "botón de pánico", pero ahora 
+// también podrás cerrar la ventana de foot con la tecla que uses para cerrar ventanas.
+Alt+K { spawn "pkill" "-SIGINT" "wf-recorder"; }
+
+			// SHOTS
+
+	Print { screenshot; }
+	Mod+Print { screenshot-screen; }
+	Alt+Print { screenshot-window; }
+	Alt+S { spawn "Swappy.sh"; }
+
+			// BAJAR Y SUBIR VOLUMEN
+
+	Alt+F2 {spawn "pactl" "set-sink-volume" "@DEFAULT_SINK@" "-5%";}
+	Alt+F3 {spawn "pactl" "set-sink-volume" "@DEFAULT_SINK@" "+5%";}
+	Alt+F4 { spawn "pactl" "set-sink-mute" "@DEFAULT_SINK@" "toggle"; }
+
+			// TERMINAL //
+
+		Mod+Return { spawn "ghostty"; }
+		Mod+Tab { spawn "foot"; }
+
+			// WAYBAR //
+
+	Mod+O  { spawn "pkill" "waybar" ; }
+	Mod+P  { spawn "way.sh" ; }
+
+			// CENTRAR LA COLUMNA
+
+	Ctrl+1 { center-column; }
+	Ctrl+left { move-column-left; }
+	Ctrl+Right { move-column-right; }
+	Ctrl+Down  { move-window-down; }
+	Ctrl+Up    { move-window-up; }
+	
+
+			// EXPOSÉ
+
+	Ctrl+Shift+Space { toggle-overview; }
+
+			// PESTAÑAS
+
+	Mod+W { toggle-column-tabbed-display; }
+	//Alt+left { focus-column-tabbed; }
+
+			// MODO FLOTANTE //
+
+	Alt+F { toggle-window-floating; }
+	Shift+Space { switch-focus-between-floating-and-tiling; }
+
+			// MODO TILING //
+
+	Mod+Left  { focus-column-left; }
+	Mod+Down  { focus-window-down; }
+	Mod+Up    { focus-window-up; }
+	Mod+Right { focus-column-right; }
+
+	Mod+Home { focus-column-first; }
+	Mod+End  { focus-column-last; }
+	Mod+Ctrl+Home { move-column-to-first; }
+	Mod+Ctrl+End  { move-column-to-last; }
+
+			// ENFOCAR Y MOVER
+
+	Mod+Page_Down      { focus-workspace-down; }
+	Mod+Page_Up        { focus-workspace-up; }
+
+	Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
+	Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
+
+			// CONTROL VENTANAS
+
+		Mod+F { maximize-column; }
+		Mod+Shift+F { fullscreen-window; }
+			//  ANCHURA
+		Mod+KP_Subtract { set-column-width "-3%"; }
+		Mod+KP_Add { set-column-width "+3%"; }
+			//  ALTURA
+		Alt+KP_Subtract { set-window-height "-3%"; }
+		Alt+KP_Add { set-window-height "+3%"; }
+			// TAMAÑOS FIJOS ANCHURA
+		Mod+KP_Home { set-column-width "33%" ; }
+		Mod+KP_Up { set-column-width "50%"; }
+		Mod+KP_Prior { set-column-width "70%"; }
+			// TAMAÑOS FIJOS ALTURA
+		Mod+KP_Left { set-window-height "33%"; }
+		Mod+KP_Begin { set-window-height "50%"; }
+		Mod+KP_Right { set-window-height "70%"; }
+		Mod+KP_End { set-window-height "100%"; }
+
+			// MOVER VENTANA FLOTANTE
+
+	"Ctrl+Shift+Left" { spawn "niri" "msg" "action" "move-floating-window" "-x" "-30"; }
+	"Ctrl+Shift+Right" { spawn "niri" "msg" "action" "move-floating-window" "-x" "+30"; }
+	"Ctrl+Shift+Up" { spawn "niri" "msg" "action" "move-floating-window" "-y" "-30"; }
+	"Ctrl+Shift+Down" { spawn "niri" "msg" "action" "move-floating-window" "-y" "+30"; }
+
+			// APLICACIONES
+
+	    Alt+Space  { spawn "fuzzel";}
+            Alt+F12 { spawn "Power-Menu.sh"; }
+            Alt+L  { spawn "Lock.sh";}
+            Alt+W  { spawn "firefox"; }
+            Alt+A  { spawn "pcmanfm"; }
+            Alt+E  { spawn "geany"; }
+            Alt+I  { spawn "WinInfo1.sh"; }
+           Alt+G {spawn "ghostty"; }
+	    Alt+Q  { spawn "Swww_Walls.sh";}
+	    Alt+P  { spawn "pick-color";}
+	    Alt+T  { spawn "foot" "-e" "pomo";}
+	    Alt+Y  { spawn "foot" "-e" "ytsurf" "--audio";}
+	    Alt+C  { spawn "cavibe" "--mode" "wallpaper"; }
+
+
+			// MOVER VENTANA A LA COLUMNA AL LADO
+
+			Ctrl+Space { consume-or-expel-window-left ; } //Columna izquierda
+			Mod+Space { consume-or-expel-window-right; } //Columna derecha
+
+			// MOVER VENTANA TILING ENTRE ESCRITORIOS
+
+			Mod+Ctrl+1 { move-column-to-workspace 1; }
+			Mod+Ctrl+2 { move-column-to-workspace 2; }
+			Mod+Ctrl+3 { move-column-to-workspace 3; }
+			Mod+Ctrl+4 { move-column-to-workspace 4; }
+			Mod+Ctrl+5 { move-column-to-workspace 5; }
+			Mod+Ctrl+6 { move-column-to-workspace 6; }
+			Mod+Ctrl+7 { move-column-to-workspace 7; }
+			Mod+Ctrl+8 { move-column-to-workspace 8; }
+			Mod+Ctrl+9 { move-column-to-workspace 9; }
+			// Eccetera...
+
+			// MOVERSE ENTRE ESCRITORIOS
+
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    // Eccetera...
+
+}		///// FIN DE LOS ATAJOS
+	    ////////////////////////////////
+
+		layout {
+		gaps 8
+		background-color "#00000040"  // "transparent"
+		//center-focused-column "on-overflow"
+			// You can change the default width of the new windows.
+		default-column-width { proportion 0.33; }
+		
+
+		//////////////////////////
+		 tab-indicator {
+        width 28
+        gap 8
+        length total-proportion=0.5
+        position "top"
+        place-within-column
+
+}
+
+	focus-ring {
+		off
+		active-color "#ffffff"
+		inactive-color "#505050"
+	 }
+
+	border {
+         width 2
+        active-color "#bbf156"
+        inactive-color "#505050"
+}
+
+	struts {
+        // left 4
+        // right 4
+        // top 4
+         bottom 4
+    }
+
+ // You can enable drop shadows for windows.
+    shadow {
+        // Uncomment the next line to enable shadows.
+         //on
+
+        // By default, the shadow draws only around its window, and not behind it.
+        // Uncomment this setting to make the shadow draw behind its window.
+        //
+        // Note that niri has no way of knowing about the CSD window corner
+        // radius. It has to assume that windows have square corners, leading to
+        // shadow artifacts inside the CSD rounded corners. This setting fixes
+        // those artifacts.
+        //
+        // However, instead you may want to set prefer-no-csd and/or
+        // geometry-corner-radius. Then, niri will know the corner radius and
+        // draw the shadow correctly, without having to draw it behind the
+        // window. These will also remove client-side shadows if the window
+        // draws any.
+        //
+        // draw-behind-window true
+
+        // You can change how shadows look. The values below are in logical
+        // pixels and match the CSS box-shadow properties.
+
+        // Softness controls the shadow blur radius.
+        softness 30
+
+        // Spread expands the shadow.
+        spread 5
+
+        // Offset moves the shadow relative to the window.
+        offset x=0 y=5
+
+        // You can also change the shadow color and opacity.
+        color "#0007"
+    }
+
+
+}
+
+			// ANIMACIONES
+
+	animations {
+
+    // Slow down all animations by this factor. Values below 1 speed them up instead.
+     slowdown 3.0
+
+     // Individual animations.
+
+	workspace-switch {
+        spring damping-ratio=0.8 stiffness=1000 epsilon=0.0008
+    }
+
+	window-open {
+        duration-ms 400
+        curve "ease-out-expo"
+    }
+
+	window-close {
+        duration-ms 400
+        curve "ease-out-quad"
+    }
+
+	horizontal-view-movement {
+        spring damping-ratio=0.8 stiffness=500 epsilon=0.0001
+    }
+
+	window-movement {
+        spring damping-ratio=0.6 stiffness=800 epsilon=0.0001
+    }
+
+	window-resize {
+        spring damping-ratio=0.5 stiffness=500 epsilon=0.0001
+    }
+
+	config-notification-open-close {
+        spring damping-ratio=0.6 stiffness=1000 epsilon=0.001
+    }
+
+	screenshot-ui-open {
+        duration-ms 200
+        curve "ease-out-quad"
+    }
+}
+
+		// REGLAS DE VENTANA
+
+window-rule {
+	geometry-corner-radius 10
+	clip-to-geometry true
+}
+window-rule {
+	match app-id="fuzzel"
+	max-width 800
+	max-height 800
+}
+window-rule {
+	opacity 0.90
+	match app-id="foot"
+	match app-id="org.gnome.Mahjongg"
+	match app-id="fuzzel"
+	match app-id="firefox"
+	match app-id="Firefox"
+	match app-id="geany"
+	match app-id="gcolor3"
+	match app-id="pavucontrol"
+	match app-id="amule"
+	match app-id="pcmanfm"
+	match app-id="io.github.seadve.Mousai"
+	match app-id="gimp"
+	match app-id="XnView"
+	match title="Mahjongg"
+	match title="Abriendo"
+	match title="Confirmar"
+	match title="Inicia sesión"
+	match title="Progreso de las operaciones de archivo"
+	match title="Catálogo"
+}
+window-rule {
+	open-maximized true
+	//match app-id="org.gnome.Mahjongg"
+	match app-id="amule"
+	match app-id="gimp"
+}
+window-rule {
+	open-floating true
+	match app-id="foot"
+	match app-id="galculator"
+	match app-id="io.github.seadve.Mousai"
+	//match app-id="transmission"
+	match title="Renombrar"
+	match title="Progreso de las operaciones de archivo"
+	match title="Inicia sesión"
+}
+
+window-rule {
+    match app-id=r#"Firefox"#
+    exclude title="^.*Firefox"
+    open-floating true
+}
+
+window-rule {
+    match title="grabadora"
+    open-floating true
+    default-column-width { fixed 600; }
+    default-window-height { fixed 200; }
+}
+window-rule {
+    match app-id="org.pwmt.zathura"
+    default-column-width { proportion 0.5; }
+}
+window-rule {
+    match is-floating=true
+    min-width 600
+    min-height 300
+}
+window-rule {
+    match title="grabadora"
+    open-floating true
+    // Anclar a la esquina inferior derecha
+    default-floating-position x=10 y=10 relative-to="bottom-right"
+}

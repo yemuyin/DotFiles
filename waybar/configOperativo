@@ -1,0 +1,211 @@
+{
+    "bar_id": "bar-1",
+    "ipc": true,
+    "layer": "top",
+    "position": "top",
+    "height": 42,
+    "width": 1800,
+    "margin-top": 2,
+
+    "modules-center": ["custom/cava", "niri/workspaces", "custom/menu", "wlr/taskbar"],
+    
+    "modules-right": ["clock", "clock#date", "custom/tiempo", "pulseaudio", "custom/power"],
+    
+    "modules-left": ["network", "cpu", "disk", "temperature", "memory"],
+
+    "clock": {
+        "format": "{:%I:%M %p}",
+        "rotate": 0,
+       "on-click": "/usr/local/bin/ags -t ActivityCenter",
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "calendar": {
+            "mode": "month",
+            "mode-mon-col": 3,
+            "on-scroll": 1,
+            "on-click-right": "mode",
+            "format": {
+                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+                "today": "<span color='#ff6699'><b>{}</b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-click-forward": "tz_up",
+            "on-click-backward": "tz_down",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        },
+    
+	"clock#date": {
+	"format": "󰨳 {:%d-%m}",
+	"tooltip-format": "<tt>{calendar}</tt>",
+	"calendar": {
+	"mode": "year",
+	"mode-mon-col": 4,
+	"on-click-right": "mode",
+	"format": {
+        "today": "<span color='#f16232'><b>{}</b></span>"
+      }
+    },
+    
+    "actions": {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    },
+    "min-length": 7,
+    "max-length": 7
+  },
+
+
+    
+    "custom/tiempo": {
+        "tooltip": true,
+        "format": " 󰖒  CLIMA",
+        "interval": 300,
+        "on-click": "foot sh -c 'curl wttr.in/Ciudad%20Real?lang=es; exec $SHELL'",
+        "return-type": "json"
+    },
+    
+    "niri/workspaces": {
+        "format": "{icon}",
+        "on-click": "activate",
+        "format-icons": {
+            "active": " ",
+            "default": ""
+        }
+    },
+    
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 20,
+        "icon-theme": "besgnulinux-red-dark",
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "on-click-right": "close"
+    },
+
+	"network": {
+    "interface": "*0",
+    "interval": 5,
+    "format": "  {essid}",
+    "format-alt": " {bandwidthUpBytes}  {bandwidthDownBytes}",
+    "format-disconnected": "󰖪  No Wi-Fi",
+    "tooltip-format": "  {ifname} \n {bandwidthUpBytes}  {bandwidthDownBytes}",
+    "tooltip-format-wifi": "{signalStrength}% \n {bandwidthUpBytes}  {bandwidthDownBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "on-click-right": "exec networkmanager_dmenu",
+    "max-length": 24
+  },
+
+	"bluetooth": {
+	"format": " ",
+	"format-disabled": "󰂳",
+	"format-connected": "󰂱 {num_connections}",
+	"tooltip-format": " {device_alias}",
+	"tooltip-format-connected": "{device_enumerate}",
+	"tooltip-format-enumerate-connected": " {device_alias} 󰂄{device_battery_percentage}%",
+	"tooltip": true,
+	"on-click": "blueman-manager",
+},
+    
+    "custom/power": {
+        "format": "⏻ ",
+        "tooltip": true,
+        "on-click": "Fuzzel_Menu_Power.sh",
+        "on-click-right": "pkill waybar && waybar"  
+    },
+    
+    "custom/menu": {
+        "format": "   MENU",
+        "tooltip": true,
+        "on-click": "fuzzel"
+    },
+    
+    "memory": {
+        "interval": 5,
+        "format": "MEM {percentage}%  ⚡ ",
+        "states": {
+            "warning": 60,
+            "critical": 80
+        },
+        "on-click": "foot -e sh -c 'inxi -mt; exec $SHELL'",
+        "on-click-right": "foot sh -c 'btop; exec $SHELL'"
+    },
+    
+    "temperature": {
+        "thermal-zone": 2,
+        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 80,
+        "on-click": "foot sh -c 'btop; exec $SHELL'",
+        "format-critical": "{temperature}° {icon}",
+        "format": "{temperatureC}° {icon} TEMP",
+        "format-icons": ["", "", "󱃂"]
+    },
+    
+    "disk": {
+        "interval": 30,
+        "format": " DISCOS   ",
+        "on-click": "foot -e sh -c 'echo \"=== df -h ===\"; df -h; echo -e \"\\n=== dysk ===\"; dysk; echo -e \"\\nPresiona Enter para salir\"; read; exec $SHELL'"
+    },
+
+    "pulseaudio": {
+    "format": "{icon}  {volume}%",
+    "format-muted": "VOL 󰝟 {volume}%",
+    "format-icons": {
+      "headphone": "󰋋",
+      "default": [
+        "󰕿",
+        "󰖀",
+        "󰕾"
+      ]
+    },
+    "tooltip": true,
+    "tooltip-format": "VOL {}",
+    "on-click": "pavucontrol",
+    "on-scroll-up": "pactl set-sink-volume 0 +1%",
+    "on-scroll-down": "pactl set-sink-volume 0 -1%",
+    "min-length": 6,
+    "max-length": 6
+  },
+    
+    "cpu": {
+        "format": "CPU {usage} %   ",
+        "tooltip": true,
+        "on-click": "foot -e sh -c 'inxi -ACDG; exec $SHELL'"
+    },
+
+	"custom/cpu": {
+	"format": "{percentage}% 󰍛 ",
+	"interval": 1,
+	"min-length": 5,
+	"format-alt-click": "click",
+	"format-alt": "{icon0}{icon1}{icon2}{icon3} {usage:>2}% 󰍛",
+	"format-icons": [
+		"▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"
+	],
+	"on-click-right": "gnome-system-monitor",
+},
+
+    
+    "custom/cava": {
+        "exec": "cava-waybar.sh",
+        "format": "{}",
+        "return-type": "json",
+        "tooltip": false
+    },
+
+  "custom/playerinfo": {
+    "format": "{}",
+    "exec": "playerinfo.sh",
+    "return-type": "json",
+    "interval": 5,  // Cambié a 5 segundos (1 es muy agresivo)
+    "tooltip": true,
+    "on-click-middle": "play-pause.sh",
+    "on-click-right": "next.sh",
+    "on-click-left": "previous.sh"
+}
+    
+}

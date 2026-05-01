@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/bin/amixer -c 0 sset PCM 5%- > /dev/null 2>&1

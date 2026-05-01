@@ -1,0 +1,14 @@
+// Blur the background behind Waybar popup menus.
+layer-rule {
+    match namespace="^waybar$"
+
+    popups {
+        // Match the default GTK 3 popup corner radius.
+        geometry-corner-radius 6
+        opacity 0.70
+
+        background-effect {
+            blur true
+        }
+    }
+}

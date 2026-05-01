@@ -1,0 +1,173 @@
+// -*- mode: json -*-
+
+
+{   
+	"bar_id": "bar-1",
+	"ipc": true,
+    "layer": "top",
+    "position": "top",
+    "height": 48,
+    "width": 750,
+    
+    "margin-top": -10,
+    "modules-left": [ "cpu", "memory", "temperature", "disk", "custom/tiempo" ],
+    "modules-center": [ "niri/workspaces", "wlr/taskbar", "custom/menu", "clock", "clock#date", "custom/power", "pulseaudio" ],
+    "modules-right": ["cava" ],
+
+
+    
+    "clock": {
+         "timezone": "Europe/Madrid",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>", 
+        "on-click": "mate-calculator"
+              
+    },
+    
+    "clock#date": {
+      "interval": 10,
+      "format": " {:%e %b %Y}", // Icon: calendar-alt
+      "tooltip-format": "{:%e %B %Y}",
+      "on-click": "gnome-calendar",
+    },
+     
+     
+     "custom/weather": {
+    "tooltip": true,
+    "format": "{}",
+    "interval": 300,
+    "exec": "gnome-weather",
+    "return-type": "json",
+  },
+  
+    "cava": {
+        "cava_config": "/home/yemu/.config/cava/config",
+        "framerate": 30,
+        "autosens": 0,
+        "sensitivity": 5,
+        "foreground": "green",
+        "bars": 30,
+        "lower_cutoff_freq": 50,
+        "higher_cutoff_freq": 10000,
+        "hide_on_silence": false,
+        "method": "pulse",
+        "source": "auto",
+        "stereo": true,
+        "reverse": false,
+        "bar_delimiter": 0,
+        "monstercat": false,
+        "waves": false,
+        "noise_reduction": 0.77,
+        "input_delay": 2,
+        "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ],
+        "actions": {
+                   "on-click-right": "mode"
+                   }
+    },        
+    "cpu": {
+        "format": "{usage}%  " ,
+        "tooltip": true,
+        "on-click": "cpu-x"
+    },
+    
+    "disk": {
+	"interval": 30,
+	"format": " ",
+	"on-click": "baobab"
+},
+
+
+ 
+    "temperature": {
+         "thermal-zone": 2,
+         "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 80,
+        "on-click": "foot -e btop",
+        "format-critical": "{temperature}° {icon}",
+        "format": "{temperatureC}° {icon}",
+        "format-icons": ["", "", "󱃂"]
+    },
+    
+     
+    
+    "memory": {
+        "interval": 5,
+        "format": "  {}%", // Icon: memory
+        "states": {
+            "warning": 60,
+            "critical": 70
+        }
+    },
+   
+
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 20,
+        "icon-theme": "besgnulinux-red",
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "on-click-right":  "close"
+      
+    },
+
+    "custom/menu" :{
+    "format": "  ",
+        "tooltip": true,
+        "on-click": "fuzzel"
+    },
+    
+    "custom/tiempo" :{
+    "format": " 󰖒 ",
+        "tooltip": true,
+        "on-click": "gnome-weather"
+    },
+    
+    "custom/cal" :{
+    "format": "  ",
+        "tooltip": true,
+        "on-click": "alacritty --command cal -3"
+    },
+    
+    
+    "custom/power": {
+    "format": "⏻ ",
+        "tooltip": true,
+        "on-click":  "wlogout -b2",
+        "on-click-right": "pkill waybar && waybar"  
+    },
+    
+    "pulseaudio" : {
+    "scroll-step" : 1,
+    "format" : "{icon}   {volume}%",
+    "format-muted" : "󰖁 Muted",
+    "format-icons" : {
+    "default" : [ "", "", "", ],
+    },
+    "on-click" : "pavucontrol",
+    "on-click-right" : "pulseaudio-equalizer-gtk",
+    "tooltip" : false,
+  },
+    
+ 
+    "network": {
+        "interface": "enp2s0",
+        "format": "{ifname}",
+        "format-wifi": "wlp3s0: {essid}",
+        "format-ethernet": "enp2s0: {ipaddr}/{cidr}",
+        "format-disconnected": "wlp3s0: disconnected",
+        "max-length": 50
+    },
+    
+    
+
+    "niri/workspaces": {
+    "format": "{icon}",
+    "on-click": "activate",
+    "format-icons": {
+        "active": "", 
+        "default": "󰔷"   
+    }
+},
+
+    
+}

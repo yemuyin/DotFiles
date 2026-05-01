@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Carpeta que contiene los GIFs
+input_folder="/home/yemu/Imágenes/GifS"
+output_file="output.mp4"
+
+# Cambiar al directorio de los GIFs
+cd "$input_folder" || { echo "No se pudo acceder a la carpeta"; exit 1; }
+
+# Crear un archivo temporal para listar los GIFs
+concat_list="concat_list.txt"
+> "$concat_list" # Limpiar el archivo si existe
+
+# Convertir cada GIF a MP4 y agregarlo a la lista
+for gif in *.gif; do
+    if [[ -f "$gif" ]]; then
+        mp4_file="${gif%.gif}.mp4"
+        ffmpeg -i "$gif" -vf "fps=30,format=yuv420p" -c:v libx264 -pix_fmt yuv420p "$mp4_file" -y
+        echo "file '$mp4_file'" >> "$concat_list"
+    fi
+done
+
+# Unir todos los MP4 en un solo archivo
+ffmpeg -f concat -safe 0 -i "$concat_list" -c copy "$output_file"
+
+# Limpiar archivos temporales (opcional)
+echo "Proceso completado. Archivo final: $output_file"

@@ -1,0 +1,15 @@
+		// SIDE-BAR
+						
+    // Toggle the focused window into/out of the sidebar
+    Mod+S { spawn-sh "~/.local/bin/niri-sidebar toggle-window"; }
+
+    // Toggle sidebar visibility (hide/show)
+    Mod+Shift+S { spawn-sh "~/.local/bin/niri-sidebar toggle-visibility"; }
+	
+    // Flip the order of the sidebar
+    Ctrl+S { spawn-sh "~/.local/bin/niri-sidebar flip"; }
+	
+    // Force reorder (useful if something gets misaligned manually)
+    Mod+Alt+R { spawn-sh "~/.local/bin/niri-sidebar reorder"; }
+
+			

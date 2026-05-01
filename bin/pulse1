@@ -1,0 +1,88 @@
+#!/bin/bash
+# pulse1 - Versión final con Temperaturas Corregidas
+
+trap 'printf "\e[?25h\e[0m"; exit 0' INT TERM
+
+# Colores
+V1='\e[1;32m' # Verde
+G='\e[90m'    # Gris
+R='\e[0m'     # Reset
+C1='\e[1;31m' # Rojo
+C2='\e[1;33m' # Amarillo
+C3='\e[1;36m' # Cian
+C5='\e[1;35m' # Purpura
+C6='\e[1;34m' # Azul
+
+# Info estática
+OS=$(grep -m1 '^PRETTY_NAME=' /etc/os-release | cut -d= -f2 | tr -d '"')
+KERNEL=$(uname -r | cut -d'-' -f1,2)
+PKGS=$(xbps-query -l 2>/dev/null | wc -l)
+OS_AGE="$(( ($(date +%s) - $(stat -c %Y /etc/xbps.d 2>/dev/null || stat -c %Y /)) / 86400 )) days"
+CPU_M=$(awk -F: '/model name/ {print $2; exit}' /proc/cpuinfo | xargs | cut -c1-35)
+GPU_M=$(glxinfo -B 2>/dev/null | grep -m1 "Device" | cut -d: -f2 | xargs | cut -c1-35)
+[[ -z "$GPU_M" ]] && GPU_M=$(lspci 2>/dev/null | grep -iE 'vga|3d' | cut -d: -f3 | xargs | cut -c1-35)
+
+draw_bar() {
+    local pct=$1
+    local len=25
+    local fill=$(( pct * len / 100 ))
+    local bar=""
+    for ((i=0; i<fill; i++)); do bar+="█"; done
+    for ((i=fill; i<len; i++)); do bar+="▒"; done
+    printf "\e[32m%s\e[0m" "$bar"
+}
+
+PREV_T=0; PREV_I=0; PREV_RX=0; PREV_TX=0
+
+while true; do
+    UPTIME=$(uptime -p | sed 's/up //')
+    RES=$(wlr-randr 2>/dev/null | grep -m1 "current" | awk '{printf "%s @ %.0fHz", $1, $3}' || echo "Niri Output")
+    
+    # Datos de carga
+    read -r _ u n s i w x y z _ < /proc/stat
+    T=$((u+n+s+i+w+x+y+z)); I=$((i+w))
+    diff_t=$((T - PREV_T)); diff_i=$((I - PREV_I))
+    [[ $diff_t -eq 0 ]] && diff_t=1
+    CPU=$(( (diff_t - diff_i) * 100 / diff_t ))
+    PREV_T=$T; PREV_I=$I
+    RAM_P=$(free | awk '/Mem:/ {printf "%.0f", $3/$2*100}')
+    DISK_ROOT=$(df / --output=pcent | tail -1 | tr -dc '0-9')
+    DISK_HOME=$(df /home --output=pcent | tail -1 | tr -dc '0-9')
+
+    # Red
+    read RX TX < <(awk 'NR>2 {rx+=$2; tx+=$10} END {print rx, tx}' /proc/net/dev)
+    DL=$(( (RX - PREV_RX) / 1024 )); UL=$(( (TX - PREV_TX) / 1024 ))
+    PREV_RX=$RX; PREV_TX=$TX
+    
+    # --- FIX TEMPERATURAS BASADO EN TU SALIDA ---
+    # CPU: Buscamos Tctl en el adaptador k10temp
+    CPUT=$(sensors 2>/dev/null | grep 'Tctl' | awk '{print $2}' | tr -dc '0-9.' | cut -d. -f1 || echo "0")
+    # GPU: Buscamos edge en el adaptador amdgpu
+    GPUT=$(sensors 2>/dev/null | grep 'edge' | awk '{print $2}' | tr -dc '0-9.' | cut -d. -f1 || echo "0")
+
+    clear
+    printf "\n"
+    printf "  ${C1}USER    ${G}│ ${R}%s\n" "$USER"
+    printf "  ${C2}UPTIME  ${G}│ ${R}%s\n" "$UPTIME"
+    printf "  ${C3}DISPLAY ${G}│ ${R}%s\n" "$RES"
+    printf "  ${V1}DISTRO  ${G}│ ${R}%s\n" "$OS"
+    printf "  ${C5}KERNEL  ${G}│ ${R}%s\n" "$KERNEL"
+    printf "  ${C6}WM      ${G}│ ${R}Niri\n"
+    printf "  ${C1}APPS    ${G}│ ${R}%s (xbps)\n" "$PKGS"
+    printf "  ${C2}AGE     ${G}│ ${R}%s\n" "$OS_AGE"
+    printf "\n"
+    
+    printf "  ${V1}CPU   ${R}%3d%%  %s\n" "$CPU" "$(draw_bar $CPU)"
+    printf "  ${V1}RAM   ${R}%3d%%  %s\n" "$RAM_P" "$(draw_bar $RAM_P)"
+    printf "  ${V1}ROOT  ${R}%3d%%  %s\n" "$DISK_ROOT" "$(draw_bar $DISK_ROOT)"
+    printf "  ${V1}HOME  ${R}%3d%%  %s\n" "$DISK_HOME" "$(draw_bar $DISK_HOME)"
+    
+    printf "\n"
+    printf "  ${G}------------------------------------------${R}\n"
+    printf "  ${C3}NET   ${G}│ ${R}D:%skb U:%skb\n" "$DL" "$UL"
+    printf "  ${C2}CPU   ${G}│ ${R}%s @ %s°C\n" "$CPU_M" "$CPUT"
+    printf "  ${C6}GPU   ${G}│ ${R}%s @ %s°C\n" "$GPU_M" "$GPUT"
+    printf "\n"
+
+    sleep 1
+done

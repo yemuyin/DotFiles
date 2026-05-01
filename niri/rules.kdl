@@ -1,0 +1,143 @@
+
+
+// Fuzzel específico
+window-rule {
+    match app-id="fuzzel"
+    max-width 800
+    max-height 800
+}
+
+window-rule {
+    // Detecta la ventana de Yad por su título o nombre
+    match title="Yad Control Center"
+    
+    // La hace flotante por defecto
+    open-floating true
+    default-floating-position x=2200 y=60
+    // Forma correcta de definir el tamaño:
+    default-column-width { fixed 1050; }
+    default-window-height { fixed 450; }
+    
+    // Evita que las barras de título de Niri rodeen el panel
+    draw-border-with-background true
+}
+
+// Regla de Opacidad (0.90) - Lista Completa
+window-rule {
+    opacity 0.70
+    match app-id="foot"
+    match app-id="org.gnome.Mahjongg"
+    match app-id="fuzzel"
+    match app-id="firefox"
+    //match app-id="chromium"
+    match app-id="geany"
+    match app-id="gcolor3"
+    match app-id="pavucontrol"
+    match app-id="amule"
+    match app-id="pcmanfm"
+    match app-id="io.github.seadve.Mousai"
+    match app-id="gimp"
+    match app-id="XnView"
+    match title="Mahjongg"
+    match title="Abriendo"
+    match title="Confirmar"
+    match title="Inicia sesión"
+    match title="Progreso de las operaciones de archivo"
+    match title="Catálogo"
+}
+
+// Abrir Maximizadas
+//window-rule {
+  //  open-maximized true
+    //}
+
+// Regla específica para Gimp al 75%
+window-rule {
+    match app-id="gimp"
+    match app-id="org.gnome.Mahjongg"
+    match app-id="amulegui"
+    
+    // Establece el ancho de la columna al 75% del ancho de la pantalla
+    default-column-width { proportion 0.75; }
+    }
+
+// Regla específica para Firefox-Chromium al 50%
+window-rule {
+    match app-id="Firefox"
+    match app-id="chromium"
+    
+    
+    // Establece el ancho de la columna al 50% del ancho de la pantalla
+    default-column-width { proportion 0.50; }
+    }
+
+// Abrir Flotantes
+window-rule {
+    open-floating true
+    match app-id="foot"
+    match app-id="galculator"
+    match app-id="io.github.seadve.Mousai"
+    match title="Renombrar"
+    match title="Progreso de las operaciones de archivo"
+    match title="Inicia sesión"
+    match title="Imagen en imagen"
+}
+
+window-rule {
+   
+    background-effect {
+        blur true 
+    }
+}
+
+  window-rule {
+    match app-id="fuzzel"
+	 match app-id="com.mitchellh.ghostty"
+        match app-id="foot"
+        match app-id="pcmanfm"
+        match app-id="mako"
+        match app-id="geany"
+        match app-id="firefox"
+    popups {
+        // Matches the default libadwaita pop-up corner radius.
+        geometry-corner-radius 15
+
+        // Note: it'll look better to set background opacity
+        // through your GTK theme CSS and not here.
+        // This is just an example that makes it look obvious.
+        opacity 1.0
+
+        background-effect {
+            blur true
+        }
+    }
+}
+   
+    // especial Firefox (Popups flotantes)
+window-rule {
+    match app-id=r#"Firefox"#
+    exclude title="^.*Firefox"
+    open-floating true
+}
+
+// Tu grabadora (Unificada y posicionada)
+window-rule {
+    match title="grabadora"
+    open-floating true
+    default-column-width { fixed 600; }
+    default-window-height { fixed 200; }
+    default-floating-position x=10 y=10 relative-to="bottom-right"
+}
+
+// Zathura al 50%
+window-rule {
+    match app-id="org.pwmt.zathura"
+    default-column-width { proportion 0.5; }
+}
+
+// Mínimos para ventanas flotantes
+window-rule {
+    match is-floating=true
+    min-width 600
+    min-height 300
+}

@@ -1,0 +1,20 @@
+"custom/calendar": {
+	"exec": "echo '{\"tooltip\": \"$(cal)\"}'",
+	"format": " 󰨳 {:%d-%m}",
+	"calendar": {
+	"mode": "year",
+	"mode-mon-col": 3,
+	"on-click-right": "mode",
+	"format": {
+        "today": "<span color='#f16232'><b>{}</b></span>"
+      }
+    },
+
+    "actions": {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    },
+    "min-length": 7,
+    "max-length": 7
+  },

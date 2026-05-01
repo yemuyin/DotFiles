@@ -1,0 +1,346 @@
+/// CONFIGURACION NIRI 
+
+//Environment
+//Input
+//Outputs
+//Key Bindings
+//Layout
+//Miscellaneous
+//Window Rules
+//Layer Rules
+//Animations
+
+environment {
+    
+    
+    XDG_SESSION_TYPE "wayland"
+    QT_QPA_PLATFORM "wayland"
+    QT_QPA_PLATFORMTHEME "gtk3"
+    QT_QPA_THEME "gtk3"
+    SDL_VIDEODRIVER "wayland"
+    _JAVA_AWT_WM_NONREPARENTING "1"
+    
+}
+
+
+
+
+input {
+    keyboard {
+        xkb {
+            layout "es"
+            
+        }
+	}
+	focus-follows-mouse max-scroll-amount="20%"
+	warp-mouse-to-focus
+}
+ 
+       
+output "eDP-1" {
+    
+    mode "2560x1080@120.030"
+
+    // You can use integer or fractional scale, for example use 1.5 for 150% scale.
+    scale 1
+	transform "normal"
+	position x=1280 y=0
+}
+
+//spawn-at-startup "niri" "msg" "action" "focus-workspace" "2" // forces default 
+spawn-at-startup "udiskie"
+spawn-at-startup "waybar"
+spawn-at-startup "mako"
+spawn-at-startup "~/.ScriptS/Qwen_bash.sh"
+spawn-at-startup "pipewire"
+
+
+prefer-no-csd
+screenshot-path "~/Imágenes/ShotS/Niri from %Y-%m-%d %H-%M-%S.png"
+
+// Permanent Workspaces - Added by TheMisterChristie
+// Adjust this layout to match your needs
+// This creates workspace one as a "Scratchpad" sort of workspace
+// And creates the other workspaces following it with an automatic workspace following
+// The workspace two defined below is the default one Niri uses
+//workspace to workspace 2 to creatin a "scratchpad" on workspace 1
+//workspace "1"  //"scratchpad" 
+//workspace "2"    //"main" 
+
+
+
+// Make the wallpaper stationary, rather than moving with workspaces.
+layer-rule {
+    // This is for swaybg; change for other wallpaper tools.
+    // Find the right namespace by running niri msg layers.
+    //match namespace="^wallpaper$"
+    place-within-backdrop true
+}
+
+
+
+
+
+binds {
+	//Alt+Return {  }
+	 Alt+Space  { spawn "fuzzel";}
+          Alt+F12 { spawn "wlogout" "-b2"; }
+           Alt+L { spawn "gtklock" "-b" "/home/yemu/.BGs/baba-yaga-john-wick-3840x2160.png"; }
+            Alt+W  { spawn "firefox"; }
+             Alt+T  { spawn "foot"; }
+              Alt+A  { spawn "pcmanfm"; }
+               Alt+E  { spawn "geany"; }
+                Alt+I  { spawn "~/.ScriptS/WinInfo"; }	
+	         Alt+Q  { spawn "~/.ScriptS/Qwen_bash.sh";}
+	          Alt+G  { spawn "mate-calculator"; }
+	            Alt+P  { spawn "hyprpicker";}
+	              //Alt+D  { spawn "foot" "dysk"; }
+	//Alt+O  { spawn "pkill" "waybar" ; }
+	//Alt+P  { spawn "waybar" ; }
+	
+	
+	Mod+S { spawn "sh" "-c" "~/.config/niri/keys.sh"; }
+	//{ show-hotkey-overlay; }
+	Mod+Return { spawn "foot"; }
+	Mod+Tab { spawn "foot";}
+	
+//"notify-send hello &&
+	//Alt+Ctrl+Tab { AlignColumnLeft; }
+	Alt+Tab { center-column; }
+	
+// Exposé
+	Mod+Shift+Tab { toggle-overview; }
+	Mod+Q { close-window; }
+        
+
+        
+
+// MODO FLOTANTE //
+	Alt+F { toggle-window-floating; }
+	Alt+Shift+F { switch-focus-between-floating-and-tiling; }
+
+// MODO TILING //
+
+    Mod+Left  { focus-column-left; }
+    Mod+Down  { focus-window-down; }
+    Mod+Up    { focus-window-up; }
+    Mod+Right { focus-column-right; }
+    
+	Mod+Ctrl+Left  { move-column-left; }
+	Mod+Ctrl+Down  { move-window-down; }
+	Mod+Ctrl+Up    { move-window-up; }
+	Mod+Ctrl+Right { move-column-right; }
+    
+    Mod+Home { focus-column-first; }
+    Mod+End  { focus-column-last; }
+    Mod+Ctrl+Home { move-column-to-first; }
+    Mod+Ctrl+End  { move-column-to-last; }
+    
+	Mod+Page_Down      { focus-workspace-down; }
+	Mod+Page_Up        { focus-workspace-up; }
+    
+	Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
+	Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
+    
+    // WORKSPACES
+    
+    Ctrl+Space { consume-or-expel-window-left ; }	
+    Mod+Space { consume-or-expel-window-right; }	
+
+    //Mod+Alt+T { switch-preset-column-width;  }
+    //Mod+Alt+R { switch-preset-window-height; }
+
+    Mod+F { maximize-column; }
+    Mod+Shift+F { fullscreen-window; }
+    
+    Mod+KP_Subtract { set-column-width "-3%"; }
+    Mod+KP_Add { set-column-width "+3%"; }
+    
+
+    Mod+KP_Home { set-column-width "33%"; }
+    Mod+KP_Up { set-column-width "50%"; }
+    Mod+KP_Prior { set-column-width "70%"; }
+
+    Mod+KP_Left { set-window-height "33%"; }
+    Mod+KP_Begin { set-window-height "50%"; }
+    Mod+KP_Right { set-window-height "70%"; }
+    Mod+KP_End { set-window-height "100%"; }
+    //Mod+KP_Down { set-window-height "60%"; }
+    
+	Print { screenshot; }
+	Mod+Print { screenshot-screen; }
+	Alt+Print { screenshot-window; }
+
+    // The quit action will show a confirmation dialog to avoid accidental exits.
+    Mod+Shift+E { quit; }
+    Ctrl+Alt+Delete { quit; }
+
+    
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+Ctrl+1 { move-column-to-workspace 1; }
+    Mod+Ctrl+2 { move-column-to-workspace 2; }
+    Mod+Ctrl+3 { move-column-to-workspace 3; }
+    Mod+Ctrl+4 { move-column-to-workspace 4; }
+    Mod+Ctrl+5 { move-column-to-workspace 5; }
+    Mod+Ctrl+6 { move-column-to-workspace 6; }
+    Mod+Ctrl+7 { move-column-to-workspace 7; }
+    Mod+Ctrl+8 { move-column-to-workspace 8; }
+    Mod+Ctrl+9 { move-column-to-workspace 9; }
+    
+    }
+    
+   
+layout {
+		gaps 6
+		background-color "transparent"
+		center-focused-column "on-overflow"
+
+// You can change the default width of the new windows.
+	
+default-column-width {
+		proportion 0.33
+       }
+
+    
+		
+preset-column-widths {
+	proportion 0.33
+	
+        proportion  0.5
+
+        proportion 0.70 
+        
+        proportion 1.0
+
+        proportion 0.70
+
+        proportion  0.5 
+
+        proportion 0.33
+ 
+    }
+	
+preset-window-heights {
+	proportion 0.33
+    
+        proportion  0.5
+
+        proportion 0.70 
+        
+        proportion 1.0
+
+        proportion 0.70
+
+        proportion  0.5 
+
+        proportion 0.33
+      }
+      
+focus-ring {
+		off
+		active-color "#f1c232"
+		inactive-color "#505050"
+	 }
+	 
+border {
+        
+        width 3
+        active-color "#993300"
+        inactive-color "#505050"
+
+    }
+    
+struts {
+         //left 32
+         //right 32
+        // top 64
+         bottom 18
+    }
+}
+
+animations {
+    
+    // Slow down all animations by this factor. Values below 1 speed them up instead.
+     slowdown 3.0
+
+     // Individual animations.
+
+    workspace-switch {
+        spring damping-ratio=0.6 stiffness=1000 epsilon=0.0001
+    }
+
+    window-open {
+        duration-ms 300
+        curve "ease-out-expo"
+    }
+
+    window-close {
+        duration-ms 300
+        curve "ease-out-quad"
+    }
+
+    horizontal-view-movement {
+        spring damping-ratio=0.6 stiffness=500 epsilon=0.0001
+    }
+
+    window-movement {
+        spring damping-ratio=0.6 stiffness=800 epsilon=0.0001
+    }
+
+    window-resize {
+        spring damping-ratio=0.5 stiffness=500 epsilon=0.0001
+    }
+
+    config-notification-open-close {
+        spring damping-ratio=0.6 stiffness=1000 epsilon=0.001
+    }
+
+    screenshot-ui-open {
+        duration-ms 200
+        curve "ease-out-quad"
+    }
+}
+
+
+ // Example: enable rounded corners for all windows.
+// (This example rule is commented out with a "/-" in front.)
+window-rule {
+    geometry-corner-radius 8
+    clip-to-geometry true
+
+    
+}
+   
+	 
+window-rule {
+    match app-id="foot"
+    open-floating true
+    max-width 1200
+    max-height 700
+    
+}	
+	
+	
+window-rule {
+  opacity 0.85
+  match app-id="pcmanfm"
+  match app-id="foot"
+}	
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	

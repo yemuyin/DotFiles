@@ -1,0 +1,219 @@
+{
+ "clock": {
+        "format": " {:%H:%M}",
+        "tooltip": true, "tooltip-format": "{:%A, %d de %B de %Y}",
+        "on-click-right": "foot -e /home/yemu/.local/bin/pomo",
+        "on-click": "galculator"
+    },
+
+	"clock#date": {
+	"format": "󰨳 {:%d-%m}",
+	"tooltip-format": "<tt>{calendar}</tt>",
+	"calendar": {
+	"mode": "year",
+	"mode-mon-col": 3,
+	"on-click-right": "mode",
+	"format": {
+        "today": "<span color='#ff00ff'><b>{}</b></span>",
+	"year": "<span background_color='#19160D'><b>{}</b></span>"
+      }
+    },
+
+    "actions": {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    },
+    "min-length": 7,
+    "max-length": 7
+  },
+
+	"ext/workspaces": {
+  "format": "{icon}",
+  "ignore-hidden": true,
+  "on-click": "activate",
+  "sort-by-id": true,
+},
+
+    "custom/tiempo": {
+        "tooltip": false,
+        "format": " 󰖒  CLIMA",
+        "interval": 300,
+        "on-click": "~/.local/bin/Clima.sh",
+        "on-click-right": "foot -e ~/.local/bin/ascii_moon-linux-amd64",
+        "return-type": "json"
+    },
+
+    "niri/workspaces": {
+        "format": "{icon}",
+        "on-click": "activate",
+        "format-icons": {
+            "active": "󰸳 ",
+            "default": ""
+        }
+    },
+"wlr/taskbar": {
+    "format": "{icon}",
+    "icon-size": 20,
+    "icon-theme": "besgnulinux-drawing",
+    "tooltip-format": "{title}",
+    "on-click": "activate",
+    "on-click-middle": "close",
+    "on-click-right": "close",
+    "app_ids-mapping": {
+        "Firefox": "firefox",
+        "firefox": "firefox"
+    },
+    "rewrite": {
+        "Mozilla Firefox": "firefox",
+        "Firefox Web Browser": "firefox"
+    }
+
+},
+
+	"network": {
+    "interface": "*0",
+    "interval": 5,
+    "format": "  {essid}",
+    "format-alt": " {bandwidthUpBytes}  {bandwidthDownBytes}",
+    "format-disconnected": "󰖪  No Wi-Fi",
+    "tooltip-format": "  {ifname} \n {bandwidthUpBytes}  {bandwidthDownBytes}",
+    "tooltip-format-wifi": "{signalStrength}% \n {bandwidthUpBytes}  {bandwidthDownBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "on-click-right": "foot -w 700x400px -e btop -c ~/.config/btop/btopNET.conf",
+    "max-length": 24
+  },
+
+	"bluetooth": {
+	"format": " ",
+	"format-disabled": "󰂳",
+	"format-connected": "󰂱 {num_connections}",
+	"tooltip-format": " {device_alias}",
+	"tooltip-format-connected": "{device_enumerate}",
+	"tooltip-format-enumerate-connected": " {device_alias} 󰂄{device_battery_percentage}%",
+	"tooltip": true,
+	"on-click": "blueman-manager",
+},
+
+    "custom/power": {
+        "format": "⏻ ",
+        "tooltip": true,
+        "on-click": "~/.local/bin/Power-Menu.sh",
+        "on-click-right": "pkill waybar && waybar"
+    },
+
+    "custom/menu": {
+        "format": " Menu   Procs",
+        "tooltip": true,
+        "on-click": "fuzzel",
+        "on-click-right": "foot -w 1000x1000px -e btop -c ~/.config/btop/btopPROC.conf",
+    },
+
+    "memory": {
+        "interval": 5,
+        "format": "MEM {percentage}%  ⚡ ",
+        "states": {
+            "warning": 60,
+            "critical": 80
+        },
+        "on-click": "foot --title=Memory_Info -w 800x600px ~/.local/bin/mem_info.sh",
+        "on-click-right": "foot -w 700x400px -e btop -c ~/.config/btop/btopMEM.conf",
+    },
+
+    "temperature": {
+        "thermal-zone": 2,
+        "hwmon-path": "/sys/class/hwmon/hwmon0/temp1_input",
+        "critical-threshold": 80,
+        "on-click": "foot sh -c 'btop; exec $SHELL'",
+        "format-critical": "  {temperatureC}°C {icon}",
+        "format": "{temperatureC}° {icon} Btop",
+        "format-icons": ["", "", "󱃂"]
+    },
+
+    "disk": {
+        "interval": 30,
+        "format": " DISCOS   ",
+        "on-click": "foot --title=Disk_Info ~/.local/bin/disk_info.sh"
+    },
+
+   "custom/volume": {
+    "format": " {}",
+    "exec": "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2 * 100)}' | sed 's/$/%/'",
+    "interval": 1,
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
+    "tooltip": false
+},
+
+    "cpu": {
+        "format": "CPU {usage} %   ",
+        "tooltip": true,
+        "on-click": "foot -w 1040x1280px ~/.local/bin/cpu_info.sh",
+        "on-click-right": "foot -w 700x400px -e btop -c ~/.config/btop/btopCPU.conf",
+    },
+
+
+    "custom/cava": {
+        "exec": "/home/yemu/.local/bin/cava-waybar.sh",
+        "format": "{}",
+        "return-type": "json",
+        "on-click-right": "notify-send \"󰎆 Reproduciendo\" \"$(playerctl metadata --format '{{title}} - {{artist}}')\"",
+        "restart-interval": 1,
+        "tooltip": false
+    },
+
+ "custom/playerinfo": {
+    "format": "{}",
+    "exec": "/home/yemu/.local/bin/playerinfo.sh",
+    "return-type": "text",
+    "interval": 1,
+    "timeout": 500,
+    "on-click": "playerctl play-pause",
+    "format-icons": {}
+},
+
+"custom/clipboard": {
+    "format": " HIST",
+    "tooltip": true,
+    "on-click": "~/.local/bin/Cliphist_Menu.sh",    
+    "on-click-right": "~/.local/bin/Cliphist_Clear.sh", 
+    "interval": 3
+    
+},
+
+"custom/timer": {
+    "exec": "/home/yemu/.local/bin/timer.sh",
+    "return-type": "json",
+    //"interval": 1,
+    "on-click": "/home/yemu/.local/bin/timer.sh click",
+    "on-click-right": "/home/yemu/.local/bin/timer.sh right",
+    "on-click-middle": "/home/yemu/.local/bin/timer.sh middle",
+    "on-scroll-up": "/home/yemu/.local/bin/timer.sh up",
+    "on-scroll-down": "/home/yemu/.local/bin/timer.sh down",
+    "tooltip": true
+},
+
+"custom/top-cpu": {
+  "exec": "/home/yemu/.config/waybar/Modulos/top-cpu.sh",
+  "return-type": "json",
+  "interval": 3,
+  "format": "CPU {}",
+  "tooltip": true,
+  "icon": "",
+  "color": "#ffb86c",
+  "on-click-right": "foot -w 700x400px -e btop -c ~/.config/btop/btopCPU.conf",
+},
+"custom/top-memory": {
+  "exec": "/home/yemu/.config/waybar/Modulos/top-memory.sh",
+  "return-type": "json",
+  "interval": 3,
+  "format": "MEM {}",
+  "tooltip": true,
+  "icon": "",
+  "color": "#8be9fd",
+  "on-click-right": "foot -w 700x400px -e btop -c ~/.config/btop/btopMEM.conf",
+},
+
+}
+

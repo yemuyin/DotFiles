@@ -1,0 +1,155 @@
+* {
+    font-weight: bold;
+    border-radius: 35px;
+    border-color: #b87333;
+    border-style: solid;
+    font-family: "CaskaydiaCove-Nerd-Font-SemiBold-Italic";
+    font-size: 12px;
+    min-height: 8px;
+    border: 2px;
+    background: transparent;
+}
+
+/* LA BARRA PRINCIPAL */
+#waybar {
+    border-color: #b87333;
+    border-radius: 20px;
+    background: transparent;
+}
+
+window#waybar {
+    color: #b87333;
+    border-color: #b87333;
+    background: transparent;
+    opacity: 1;
+}
+
+.modules-left, .modules-center, .modules-right {
+    border-color: #b87333;
+    border: 2px;
+    color: #b87333;
+    background: transparent;
+}
+
+/* ESTILO BASE PARA TODOS LOS MÓDULOS (Recuperado #custom-taskbar aquí) */
+#cpu,
+#memory,
+#temperature,
+#disk,
+#clock,
+#pulseaudio,
+#wireplumber,
+#custom-volume,
+#custom-menu,
+#custom-tiempo,
+#custom-power,
+#custom-cal,
+#network,
+#ext-workspaces,
+#custom-playerinfo,
+#custom-clipboard,
+#custom-timer,
+#custom-cava,
+#custom-taskbar, /* <--- REPARADO: Ahora tendrá fondo y borde */
+#taskbar,
+#wlr-taskbar {
+    margin-top: 8px;
+    margin-bottom: 0px;
+    margin-left: 4px;
+    margin-right: 4px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 20px;
+    border: 2px;
+    background: rgba(35, 50, 61, 0.75);
+    color: #b87333;
+    border-style: solid;
+    border-color: #b87333;
+    transition: 0.3s;
+    min-height: 28px;
+}
+
+/* HOVER PARA TODOS LOS MÓDULOS */
+#cpu:hover,
+#memory:hover,
+#temperature:hover,
+#disk:hover,
+#clock:hover,
+#pulseaudio:hover,
+#wireplumber:hover,
+#custom-volume:hover,
+#custom-menu:hover,
+#custom-tiempo:hover,
+#custom-timer,
+#custom-cal:hover,
+#network:hover,
+#custom-playerinfo:hover,
+#custom-clipboard:hover,
+#custom-cava:hover,
+#custom-taskbar:hover,
+#taskbar:hover,
+#wlr-taskbar:hover {
+    color: #232136;
+    background: #b87333;
+}
+
+/* WORKSPACES */
+#workspaces {
+    background: rgba(35, 50, 61, 0.75);
+    margin-top: 8px;
+    margin-left: 8px;
+    margin-right: 4px;
+    padding-right: 4px;
+    border: 2px;
+    border-style: solid;
+    border-color: #b87333;
+    color: #b87333;
+    transition: 0.3s;
+}
+
+#workspaces button {
+    color: #b87333;
+    border-color: #b87333;
+    transition: 0.3s;
+    border: 2px;
+    background: transparent;
+    margin: 2px;
+    padding: 0 8px;
+}
+
+#workspaces button:hover {
+    background: #b87333;
+    color: #232136;
+}
+
+#workspaces button.focused,
+#workspaces button.active {
+    background-color: rgba(40, 40, 40, 0.5);
+    border-style: solid;
+    border-color: #b87333;
+    color: #b87333;
+}
+
+/* AJUSTES ESPECÍFICOS PARA LOS ICONOS DE LA TASKBAR */
+#custom-taskbar span, 
+#wlr-taskbar button {
+    font-family: "CaskaydiaCove-Nerd-Font-SemiBold-Italic";
+    font-size: 18px;
+    color: #b87333;
+    background: transparent;
+    border: none;
+    margin: 0 4px;
+}
+
+/* TOOLTIPS */
+tooltip {
+    background: #171717;
+    color: #b87333;
+    border-radius: 7px;
+    border: 2px solid #101a24;
+}
+
+/* OTROS AJUSTES */
+#custom-cava { min-width: 250px; }
+#network { min-width: 100px; }
+#custom-playerinfo { min-width: 50px; }

@@ -1,0 +1,84 @@
+
+
+////////////// EXAMPLES ///////////////
+	
+// Permanent Workspaces - Added by TheMisterChristie
+// Adjust this layout to match your needs
+// This creates workspace one as a "Scratchpad" sort of workspace
+// And creates the other workspaces following it with an automatic workspace following
+// The workspace two defined below is the default one Niri uses
+//workspace to workspace 2 to creatin a "scratchpad" on workspace 1
+//workspace "1"  //"scratchpad" 
+//workspace "2"    //"main"
+
+
+
+
+
+		// Window-Rule examples
+
+		//window-rule {
+    // match app-id="Alacritty"
+    // match title="lukisea"
+    // match app-id="Adwaita"
+    // opacity 0.9
+    // opacity 0.5
+    // opacity 0.98
+
+    // open-on-output "eDP-1"
+    // default-column-width { proportion 0.5; }
+    // default-column-width { fixed 400; }
+    // default-column-width {}
+    // open-maximized true
+    // open-fullscreen true
+    // block-out-from "screencast"
+
+    // min-width 400
+    // max-width 400
+    // min-height 400
+    // max-height 400	
+	
+			// WORKSPACES
+    
+  
+
+    //Mod+Alt+T { switch-preset-column-width;  }
+    //Mod+Alt+R { switch-preset-window-height; }
+
+    //Mod+F { maximize-column; }
+    //Mod+Shift+F { fullscreen-window; }
+    
+   // Mod+KP_Subtract { set-column-width "-3%"; }
+   // Mod+KP_Add { set-column-width "+3%"; }
+    
+   // Mod+KP_Home { set-column-width "33%"; }
+   // Mod+KP_Up { set-column-width "50%"; }
+   // Mod+KP_Prior { set-column-width "70%"; }
+
+   // Mod+KP_Left { set-window-height "33%"; }
+   // Mod+KP_Begin { set-window-height "50%"; }
+   // Mod+KP_Right { set-window-height "70%"; }
+   // Mod+KP_End { set-window-height "100%"; }
+
+  // You can change the default width of the new windows.
+
+//	preset-column-widths {
+//	proportion 0.32
+//	proportion  0.5
+//	proportion 0.70 
+  //      proportion 1.0
+//	proportion 0.70
+//	proportion  0.5 
+//	proportion 0.32
+//}
+	
+//	preset-window-heights {
+//	proportion 0.32
+//	proportion  0.5
+//	proportion 0.70 
+  //      proportion 1.0
+//	proportion 0.70
+//	proportion  0.5 
+//	proportion 0.32
+//}  
+//{ show-hotkey-overlay; }

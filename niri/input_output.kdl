@@ -1,0 +1,17 @@
+input {
+    keyboard {
+        xkb {
+            layout "es"
+        }
+        numlock
+    }
+    focus-follows-mouse max-scroll-amount="20%"
+    warp-mouse-to-focus
+}
+
+output "eDP-1" {
+    mode "2560x1440@120.000"
+    scale 1
+    transform "normal"
+    position x=1280 y=0
+}

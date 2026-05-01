@@ -1,0 +1,274 @@
+animations {
+    slowdown 3.0
+    workspace-switch { spring damping-ratio=0.8 stiffness=1000 epsilon=0.0008; }
+    window-open { duration-ms 400; curve "ease-out-expo"; }
+    window-close { duration-ms 400; curve "ease-out-quad"; }
+    horizontal-view-movement { spring damping-ratio=0.8 stiffness=500 epsilon=0.0001; }
+    window-movement { spring damping-ratio=0.6 stiffness=800 epsilon=0.0001; }
+    window-resize { spring damping-ratio=0.5 stiffness=500 epsilon=0.0001; }
+}
+
+window-close {
+        duration-ms 500
+        curve "linear"
+        custom-shader r"
+            float hash(vec2 p) {
+                return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+            }
+            float noise(vec2 p) {
+                vec2 i = floor(p);
+                vec2 f = fract(p);
+                f = f * f * (3.0 - 2.0 * f);
+                return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x),
+                           mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+            }
+            vec4 burn_close(vec3 coords_geo, vec3 size_geo) {
+                if (coords_geo.x < 0.0 || coords_geo.x > 1.0 || coords_geo.y < 0.0 || coords_geo.y > 1.0) {
+                    return vec4(0.0);
+                }
+                float progress = niri_clamped_progress;
+                vec2 uv = coords_geo.xy;
+                vec3 coords_tex = niri_geo_to_tex * vec3(uv, 1.0);
+                vec4 color = texture2D(niri_tex, coords_tex.st);
+
+                float edge_dist = min(min(uv.x, 1.0 - uv.x), min(uv.y, 1.0 - uv.y));
+                float n = noise(uv * 8.0 + niri_random_seed * 100.0) * 0.3;
+                float burn_line = edge_dist + n;
+                float threshold = progress * 0.8;
+
+                vec3 ember_inner = vec3(1.0, 0.3, 0.0);
+                vec3 ember_outer = vec3(1.0, 0.8, 0.2);
+
+                if (burn_line > threshold + 0.08) {
+                    return color;
+                } else if (burn_line > threshold) {
+                    vec3 ember = mix(ember_inner, ember_outer, 1.0 - (burn_line - threshold) / 0.08);
+                    return vec4(mix(ember, color.rgb, 0.3), color.a);
+                } else {
+                    return vec4(0.0);
+                }
+            }
+            vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+                return burn_close(coords_geo, size_geo);
+            }
+        "
+    }
+window-close {
+    duration-ms 800 // Un poco más largo para que se vean las llamas subir
+    curve "linear"
+    custom-shader r"
+        float hash(vec2 p) {
+            return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+        }
+
+        float noise(vec2 p) {
+            vec2 i = floor(p);
+            vec2 f = fract(p);
+            f = f * f * (3.0 - 2.0 * f);
+            return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x),
+                       mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+        }
+
+        vec4 burn_close(vec3 coords_geo, vec3 size_geo) {
+            float progress = niri_clamped_progress;
+            vec2 uv = coords_geo.xy;
+            
+            vec3 coords_tex = niri_geo_to_tex * vec3(uv, 1.0);
+            vec4 color = texture2D(niri_tex, coords_tex.st);
+
+            // Estiramos el ruido en el eje Y para que parezcan llamas (uv.y * 0.5)
+            // Y lo desplazamos hacia arriba con el tiempo
+            float n = noise(vec2(uv.x * 10.0, uv.y * 4.0 - progress * 5.0));
+            float n2 = noise(vec2(uv.x * 20.0, uv.y * 8.0 - progress * 10.0)) * 0.5;
+            float total_noise = n + n2;
+
+            // El fuego sube desde abajo (y = 1.0) hacia arriba (y = 0.0)
+            // Progress 0.0 -> threshold alto (ventana visible)
+            // Progress 1.0 -> threshold bajo (ventana quemada)
+            float burn_line = (1.0 - uv.y) + (total_noise * 0.2);
+            float threshold = progress * 1.3; // 1.3 para asegurar que termine de subir
+
+            // Colores de Wayfire (Naranja intenso a Amarillo eléctrico)
+            vec3 fire_bright = vec3(1.0, 0.9, 0.3);
+            vec3 fire_deep = vec3(1.0, 0.2, 0.0);
+
+            if (burn_line < threshold) {
+                return vec4(0.0); // Parte ya desaparecida
+            } else if (burn_line < threshold + 0.15) {
+                // La zona de la llama activa
+                float flame_grad = (burn_line - threshold) / 0.15;
+                float intensity = pow(1.0 - flame_grad, 2.0);
+                
+                vec3 flame_color = mix(fire_deep, fire_bright, intensity);
+                // Glow extra: multiplicamos por 2.0 para que brille
+                return vec4(mix(color.rgb, flame_color * 2.0, intensity), color.a);
+            }
+
+            return color; // Parte de la ventana que aún no se quema
+        }
+
+        vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+            return burn_close(coords_geo, size_geo);
+        }
+    "
+}
+window-close{
+
+  duration-ms 400
+  curve "linear"
+
+  custom-shader r"
+
+    float hash(vec2 vector) {
+
+      float d = dot(vector, vec2(127.1, 311.7));
+
+      float ds = sin(d);
+
+      float hash_value = fract(ds * 43758.5453);
+
+      return hash_value;
+    }
+
+    float noise(vec2 vector) {
+
+      vec2 i = floor(vector);
+      vec2 f = fract(vector);
+
+      f = f * f * (3.0 - 2.0 * f);
+
+      float bottom_left = hash(i);
+      float bottom_right = hash(i + vec2(1.0, 0.0));
+      float top_left = hash(i + vec2(0.0, 1.0));
+      float top_right = hash(i + vec2(1.0, 1.0));
+
+      float bottom = mix(bottom_left, bottom_right, f.x);
+      float top = mix(top_left, top_right, f.x);
+
+      float blend = mix(bottom,top,f.y);
+
+      return blend;
+    }
+
+    float fbm(vec2 vector, int octaves) {
+
+      float total_noise = 0.0;
+
+      float amplitude = 0.5;
+
+      for (int i = 0; i < octaves; i++){
+
+        total_noise += noise(vector) * amplitude;
+
+        vector *= 2.0;
+
+        amplitude *= 0.5;
+      }
+
+      return total_noise;
+    }
+
+    vec4 burn_close(vec3 coords_geo, vec3 size_geo) {
+
+      float progress = niri_clamped_progress;
+
+      vec2 coords = coords_geo.xy;
+
+      float small_seed = 3.0 + niri_random_seed * 5.0;
+      float big_seed = 25.0 + niri_random_seed * 100.0;
+
+      int octaves = 5;
+
+      float fbm_noise = fbm((coords * small_seed + big_seed), octaves);
+
+      float mask = smoothstep(progress, progress + 0.05, fbm_noise);
+
+      float burn_width = 0.08;
+      float burn_mask = smoothstep(progress - burn_width, progress, fbm_noise) * (1.0 - mask);
+
+      vec3 burn_color = mix(vec3(1.0, 0.4, 0.2), vec3(1.0, 0.2, 0.05), burn_mask);
+      vec4 burn_edge = vec4(burn_color * burn_mask * 2.0, burn_mask);
+
+      vec3 coords_tex = niri_geo_to_tex * vec3(coords, 1.0);
+      vec4 color = texture2D(niri_tex, coords_tex.st);
+
+      color = (color * mask) + (burn_edge * color.a);
+
+      return color;
+    }
+
+    vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+      return burn_close(coords_geo, size_geo);
+    }
+
+  "
+}
+window-close fuego light{
+    duration-ms 900 // Un poco más para que se vea el recorrido ascendente
+    curve "linear"
+
+    custom-shader r"
+        float hash(vec2 v) {
+            return fract(sin(dot(v, vec2(127.1, 311.7))) * 43758.5453);
+        }
+
+        float noise(vec2 v) {
+            vec2 i = floor(v);
+            vec2 f = fract(v);
+            f = f * f * (3.0 - 2.0 * f);
+            return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x),
+                       mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+        }
+
+        float fbm(vec2 v) {
+            float total = 0.0;
+            float amp = 0.5;
+            for (int i = 0; i < 5; i++) {
+                total += noise(v) * amp;
+                v *= 2.2; // Un poco más de detalle en la brasa
+                amp *= 0.5;
+            }
+            return total;
+        }
+
+        vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+            float progress = niri_clamped_progress;
+            vec2 uv = coords_geo.xy;
+
+            // --- LA CLAVE: EL GRADIENTE VERTICAL ---
+            // uv.y va de 0 (arriba) a 1 (abajo) en la mayoría de implementaciones.
+            // Invertimos o ajustamos para que empiece desde abajo.
+            float vertical_gradient = 1.0 - uv.y; 
+            
+            // Mezclamos el ruido (FBM) con la posición vertical.
+            // Al restar el progreso, el 'corte' sube por la ventana.
+            float noise_val = fbm(uv * 4.0 + niri_random_seed * 10.0);
+            
+            // Combinamos: el fuego avanza si (gradiente + ruido) < progreso
+            float burn_coord = (vertical_gradient * 0.7 + noise_val * 0.3);
+            float threshold = progress * 1.1; // Multiplicador para asegurar que termine de quemar todo
+
+            // Máscara de lo que queda de ventana
+            float mask = smoothstep(threshold, threshold + 0.03, burn_coord);
+
+            // --- Efecto Brasa ---
+            float burn_width = 0.08;
+            float burn_mask = smoothstep(threshold - burn_width, threshold, burn_coord) * (1.0 - mask);
+
+            // Colores brasa (Rojo vivo a naranja)
+            vec3 fire_color = mix(vec3(1.0, 0.1, 0.0), vec3(1.0, 0.5, 0.1), burn_mask);
+            vec4 burn_edge = vec4(fire_color * burn_mask * 2.5, burn_mask);
+
+            // Textura original
+            vec3 coords_tex = niri_geo_to_tex * vec3(uv, 1.0);
+            vec4 color = texture2D(niri_tex, coords_tex.st);
+
+            // Mezcla final
+            color.rgb *= mask;
+            color.a *= mask;
+            
+            // Sumamos el borde de brasa sobre la transparencia
+            return color + (burn_edge * color.a);
+        }
+    "
+}

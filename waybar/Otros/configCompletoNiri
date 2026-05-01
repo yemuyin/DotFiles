@@ -1,0 +1,186 @@
+{   
+	"bar_id": "bar-0",
+	"ipc": true,
+    "layer": "top",
+    "position": "top",
+    "height": 48,
+    "width": 1450,
+    
+    "margin-top": -10,
+    "modules-left": [ "clock", "clock#date",],
+    "modules-center": [ "wlr/taskbar", ],
+    "modules-right": ["custom/menu", "custom/tiempo", "cpu", "memory", "temperature", "disk", "custom/power", "pulseaudio", ],
+
+
+    
+    "clock": {
+         "timezone": "Europe/Madrid",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>", 
+        "on-click": "galculator",       
+    },
+    
+    "clock#date": {
+      "interval": 10,
+      "format": " {:%e %b %Y}", // Icon: calendar-alt
+      "tooltip-format": "{:%e %B %Y}",
+      "on-click": "bash -c alacritty -e cal -3"
+    },
+     
+     
+     "custom/weather": {
+    "tooltip": true,
+    "format": "{}",
+    "interval": 300,
+    "exec": "gnome-weather",
+    "return-type": "json",
+  },
+  
+            
+    "cpu": {
+        "format": "{usage}%  " ,
+        "tooltip": true,
+        "on-click": "cpu-x"
+    },
+    
+    "disk": {
+	"interval": 30,
+	"format": " ",
+	"on-click": "baobab"
+},
+
+
+  "hyprland/window": {
+    "format": "<span rise='1000'>⁙</span> {} <span rise='1000'>⁙</span>"
+  },
+  
+  
+  
+  
+
+
+    "temperature": {
+         "thermal-zone": 2,
+         "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 80,
+        "on-click": "psensor",
+        "format-critical": "{temperature}° {icon}",
+        "format": "{temperatureC}° {icon}",
+        "format-icons": ["", "", "󱃂"]
+    },
+    
+     "cava": {
+      "cava_config":"$XDG_CONFIG_HOME/cava/config",
+        "framerate": 60,
+        "autosens": 1,
+        "bars": 10,
+        "method": "pulseaudio",
+        "source": "auto",
+        "bar_delimiter": 0,
+        "format-icons" : ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ],
+    },
+    
+    "memory": {
+        "interval": 5,
+        "format": "  {}%", // Icon: memory
+        "states": {
+            "warning": 60,
+            "critical": 70
+        }
+    },
+    
+    "wlr/workspaces": {
+	"format": "{icon}",
+        "on-click": "activate",
+        "format-icons": {
+            
+            "active": "", 
+            "default": "󰔷"   
+        },
+        "persistent-workspaces": {
+           "*": 6
+        }
+	
+},
+    
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 20,
+        "icon-theme": "besgnulinux-mono-orange",
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "on-click-right":  ""
+      
+    },
+    "custom/menu" :{
+    "format": "  ",
+        "tooltip": true,
+        "on-click": "wofi "
+    },
+    
+    "custom/tiempo" :{
+    "format": " 󰖒 ",
+        "tooltip": true,
+        "on-click": "gnome-weather"
+    },
+    
+    "custom/cal" :{
+    "format": "  ",
+        "tooltip": true,
+        "on-click": "alacritty --command cal -3"
+    },
+    
+    
+    "custom/power": {
+    "format": "⏻ ",
+        "tooltip": true,
+        "on-click":  "wlogout -b2", 
+        "on-click-right": "pkill waybar && waybar"  
+    },
+    
+    "pulseaudio" : {
+    "scroll-step" : 1,
+    "format" : "{icon}   {volume}%",
+    "format-muted" : "󰖁 Muted",
+    "format-icons" : {
+    "default" : [ "", "", "", ],
+    },
+    "on-click" : "pavucontrol",
+    "on-click-right" : "~/.config/hypr/scripts/control/volume --toggle",
+    "tooltip" : false,
+  },
+    
+    
+    "custom/niflveil": {
+        "format": "{}",
+        "exec": "~/.local/bin/niflveil.sh show",
+        "on-click": "~/.local/bin/niflveil.sh restore",
+        "return-type": "json",
+        "interval": "once",
+        "signal": 8
+    },
+
+    
+    "network": {
+        "interface": "enp2s0",
+        "format": "{ifname}",
+        "format-wifi": "wlp3s0: {essid}",
+        "format-ethernet": "enp2s0: {ipaddr}/{cidr}",
+        "format-disconnected": "wlp3s0: disconnected",
+        "max-length": 50
+    },
+    
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "on-click": "activate",
+        "format-icons": {
+            
+            "active": "", 
+            "default": "󰔷"   
+        },
+        "persistent-workspaces": {
+           "*": 6
+        }
+    },
+    
+}

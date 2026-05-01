@@ -1,0 +1,10 @@
+{
+"custom/weather": {
+	"format": "{}",
+	"format-alt": "{alt}: {}",
+	"format-alt-click": "click",
+	"interval": 300,
+	"return-type": "json",
+	"exec": "$HOME/.cargo/bin/waybar-weather",
+	"tooltip": true,
+},

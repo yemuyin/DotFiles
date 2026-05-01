@@ -1,0 +1,34 @@
+background-color=#25344080
+
+
+text-color=#b87333
+
+icons=1
+
+width=300 
+height=240
+
+border-size=2
+border-radius=10
+border-color=#b87333
+#88C0D0
+
+font=CaskaydiaCove Nerd Font SemiBold italic 11
+
+# Comportamiento
+max-visible=5
+max-history=20
+history=1
+default-timeout=0
+ignore-timeout=0
+
+
+# Posición y capa
+output=eDP-1
+layer=top
+anchor=top-right
+
+# Márgenes y relleno
+outer-margin=10,10,10,10
+margin=15,15,15,15
+padding=10,10,10,10
